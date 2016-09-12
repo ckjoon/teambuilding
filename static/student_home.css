@@ -1,0 +1,47 @@
+ body {
+    padding-top: 50px;
+    font-size: 12px
+  }
+  .main {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .container-panel {
+    position: relative;
+    font-size: 18px;
+    margin-top: 30px;
+            margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  
+.custab{
+    padding: 5px;
+    transition: 0.5s;
+    }
+
+  h3 {
+    text-align: center;
+    line-height: 300%;
+  }
+
+  tr {
+   line-height: 25px;
+   min-height: 25px;
+   height: 25px;
+}
+
+
+tbody{
+  overflow-y: scroll;      
+  height: 170px;           
+}
+
+td {
+  font-size: 14pt;
+}
+
+th {
+  font-size: 14pt;
+}

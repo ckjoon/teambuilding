@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Home</title>
+
+
+  <link href="../static/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <script src="../static/js/jquery-2.1.4.min.js"></script>
+  <script src="../static/js/bootstrap.min.js"></script>
+
+  <link href="../static/prof_home.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">GT Team Finder</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#createClass" data-toggle="modal">Add course section</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Choose course section<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">CS 2340 A (Spring 2016)</a></li>
+              <li><a href="#">CS 2340 B (Spring 2016)</a></li>
+              <li><a href="#">CS 2340 A (Fall 2015)</a></li>
+              <li><a href="#">CS 2340 B (Fall 2015)</a></li>
+            </ul>
+          </li>
+          <li><a href="signin.html">Sign out</a></li>
+        </ul>
+      </div>
+      <!--/.nav-collapse -->
+    </div>
+  </div>
+
+  <div class="container-panel">
+
+    <div class="row">
+      <div class="main">
+        <h2> CS 2340 A (Spring 2016)</h2>
+        <div class="panel-heading">
+          <i class="icon icon-chevron-up chevron"></i>
+          <i class="icon icon-wrench pull-right"></i> Instructor panel
+        </div>
+        <div class="panel-content">
+
+          <div class="btn-group btn-group-justified">
+            <a href="#" class="btn btn-primary col-sm-3">
+              <span class="glyphicon glyphicon-upload"></span>
+
+              <label for="exampleInput">
+                Upload Roster
+              </label>
+              <input type="file" id="exampleInput" style="display: none" />
+
+            </a>
+            <a href="#editRosterModal" class="btn btn-primary col-sm-3" data-toggle="modal">
+              <i class="glyphicon glyphicon-pencil"></i>
+              <p>Edit roster</p>
+            </a>
+            <a href="#" class="btn btn-primary col-sm-3">
+              <i class="glyphicon glyphicon-asterisk"></i>
+              <p>Match remaining students</p>
+            </a>
+          </div>
+        </div>
+        <!--/panel content-->
+        <div class="panel-body table-responsive" style="padding:0px">
+          <table class="table table-striped table-bordered" style="margin:0px">
+            <thead>
+              <tr>
+                <th>Team name</th>
+                <th>Manager</th>
+                <th>Spots filled</th>
+                <th>Status</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class=""><a href="#team" data-toggle="modal">Team 17</a></td>
+                <td class="">Benjamin Franklin (bfranklin@gatech.edu)</td>
+                <td class="">5/5</td>
+                <td><span class="label label-danger">Full</span></td>
+              </tr>
+              <tr>
+                <td class=""><a href="#">Team 16</a></td>
+                <td class="">Thomas Jefferson (tjefferson@gatech.edu)</td>
+                <td class="">4/5</td>
+                <td><span class="label label-success">Available</span></td>
+              </tr>
+              <tr>
+                <td class=""><a href="#">Team 15</a></td>
+                <td class="">Alexander Hamilton (ahamilton@gatech.edu)</td>
+                <td class="">3/5</td>
+                <td><span class="label label-success">Available</span></td>
+              </tr>
+              <tr>
+                <td class=""><a href="#">Team 14</a></td>
+                <td class="">Benjamin Franklin (bfranklin@gatech.edu)</td>
+                <td class="">2/5</td>
+                <td><span class="label label-success">Available</span></td>
+
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+      <!--/panel-->
+    </div>
+  </div>
+
+
+
+
+  <!-- Modal -->
+  <div id="editRosterModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Current roster</h4>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div class="row col-md-6 custyle">
+              <table class="table table-striped">
+                <thead>
+
+                  <tr>
+                    <th>GTID</th>
+                    <th>Name</th>
+                    <th>GT email</th>
+                  </tr>
+                </thead>
+                <tr>
+                  <td>0000000</td>
+                  <td>Jenkins, Leeroy</td>
+                  <td>ljenkins@gatech.edu</td>
+                  <td class="text-center"><a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
+                </tr>
+                <tr>
+                  <td>11111111</td>
+                  <td>Burdell, George</td>
+                  <td>gpburdell@gatech.edu</td>
+
+                  <td class="text-center"><a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
+                </tr>
+                <tr>
+                  <td>222222222</td>
+                  <td>Doctor, Sleepy</td>
+                  <td>sleepydoctor@gatech.edu</td>
+
+                  <td class="text-center"><a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
+                </tr>
+
+              </table>
+              <a href="#" class="btn btn-primary btn-xs pull-right"><b>+</b> Add a student</a>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- create class -->
+  <div id="createClass" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add Course Section</h4>
+        </div>
+        <div class="modal-body">
+
+            <form role="form">
+              <div class="form-group">
+                <label for="user">Section Name</label>
+                <input type="text" class="form-control" id="user">
+              </div>
+              <div class="form-group">
+                <label for="teamsize">Size of the Team</label>
+                <input type="number" class="form-control" id="password">
+              </div>
+              <button type="button" class="btn btn btn-success" onclick="myFunction()">
+                Create
+              </button>
+            </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+</body>
+
+</html>

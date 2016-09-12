@@ -1,0 +1,21 @@
+ body {
+    padding-top: 50px;
+    font-size: 12px
+  }
+  .main {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+  .container-form {
+    position: relative;
+    font-size: 18px;
+    margin-top: 50px;
+            margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  
+  h3 {
+    text-align: center;
+    line-height: 300%;
+  }
