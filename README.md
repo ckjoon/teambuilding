@@ -8,3 +8,4 @@ to work with these versions.
 CD into the repository and create a virtual environment using `virtualenv env`. 
 Then run the command `source env/bin/activate` to move into your virtual environment.
 Install all the dependencies using `pip3 install -r requirements.txt`. Start the server using `python3 index.py`.
+Use `deactivate` to exit the virtual environment when exiting the project directory.
