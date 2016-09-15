@@ -2,4 +2,10 @@
 Team Building Application for Junior Design
 
 ## Build and run
-While in the folder, run "source env/bin/activate" or a similar command depending on your OS. Then just use "python index.py" to start the server up. Once you are completely done, just run "deactivate".
+Ensure that you are using python 3 as well as pip3 and have virtualenv configured
+to work with these versions.
+
+CD into the repository and create a virtual environment using `virtualenv env`. 
+Then run the command `source env/bin/activate` to move into your virtual environment.
+Install all the dependencies using `pip3 install -r requirements.txt`. Start the server using `python3 index.py`.
+Use `deactivate` to exit the virtual environment when exiting the project directory.
