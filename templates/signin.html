@@ -39,18 +39,16 @@
       <div class="main">
 
 
-        <form role="form">
+        <form role="form" action="/api/login" method="post">
           <div class="form-group">
             <label for="inputUsername">GT Username</label>
-            <input type="text" class="form-control" id="user">
+            <input type="text" class="form-control" id="user" name="gtusername">
           </div>
           <div class="form-group">
             <label for="inputPassword">Password</label>
-            <input type="password" class="form-control" id="password">
+            <input type="password" class="form-control" id="password" name="password">
           </div>
-          <button type="button" class="btn btn btn-primary" onclick="myFunction()">
-            Log In
-          </button>
+          <input type="submit" class="btn btn btn-primary" value="Log In" />
         </form>
 
       </div>
@@ -58,17 +56,17 @@
     </div>
   </div>
   
-<script>
+<!--<script>
 function myFunction() {
   var a = document.getElementById("user").value;
     if(a == "ychoi302"){
-      window.location.href="https://teambuilding-ckjoon.c9users.io/junior/templates/student_home.html";
+      window.location.href="student_home";
     }else{
-      window.location.href="https://teambuilding-ckjoon.c9users.io/junior/templates/prof_home.html";
+      window.location.href="prof_home";
     }
     
   
-}
+}-->
 </script>
 </body>
 
