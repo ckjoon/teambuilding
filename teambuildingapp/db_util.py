@@ -1,6 +1,33 @@
 import psycopg2
 from config import *
 
+def get_user_info(username):
+    conn = psycopg2.connect(database=db_name, user=db_user, password=db_pass)
+    cur = conn.cursor()
+
+    cmd = 'SELECT is_instructor, email, first_name, last_name, comment FROM users WHERE gt_username = %s;'
+    data = (username)
+
+    cur.execute(cmd, data)
+
+    profile = list(cur.fetchone())
+
+    if profile[0]:
+        cmd = 'SELECT * FROM classes WHERE instructor_gt_username = %s;'
+        data = (username)
+        cur.execute(cmd, data)
+        classes = cur.fetchall()
+    else:
+        cmd = 'SELECT * FROM classes WHERE class_id in (SELECT class_id FROM roster WHERE gt_username = %s);'
+        data = (username)
+        cur.execute(cmd, data)
+        classes = cur.fetchall()
+
+    cur.close()
+    conn.close()
+    return profile, [list(x) for x in classes]
+
+
 def create_class(class_name, semester, instructor_username):
     conn = psycopg2.connect(database=db_name, user=db_user, password=db_pass)
     cur = conn.cursor()

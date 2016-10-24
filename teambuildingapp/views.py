@@ -1,6 +1,7 @@
 from teambuildingapp import app
 from flask import render_template, request, url_for, redirect, session
 from flask_cas import login_required
+import db_util
 
 @app.route("/")
 def main():
@@ -10,7 +11,8 @@ def main():
 # Uncomment this to require CAS to access this page
 # @login_required
 def prof_home():
-    return render_template('prof_home.html')
+    db_util
+    return render_template('prof_home.html', classes)
 
 @app.route("/student_home")
 # Uncomment this to require CAS to access this page
@@ -22,7 +24,7 @@ def student_home():
 def login():
     #handle login stuff.
     if request.method == 'POST':
-        if request.form.get('gtusername') != "jchoi302":
+        if request.form.get('gtusername') != "ofilatov33":
             return redirect(url_for('student_home'))
         else:
             return redirect(url_for('prof_home'))
