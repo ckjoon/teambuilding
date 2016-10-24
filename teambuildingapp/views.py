@@ -30,6 +30,10 @@ def student_home():
 def signin_error():
     return render_template('signin_error.html')
 
+@app.route("/team_manager_panel")
+def team_manager_panel():
+    return render_template('team_manager_panel.html')
+
 @app.route("/api/login", methods=['POST'])
 def login():
     #handle login stuff.
