@@ -11,7 +11,7 @@ def main():
 # Uncomment this to require CAS to access this page
 # @login_required
 def prof_home():
-    db_util
+    #profile, classes = db_util.get_user_info()
     return render_template('prof_home.html', classes)
 
 @app.route("/student_home")
