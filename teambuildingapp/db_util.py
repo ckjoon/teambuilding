@@ -103,7 +103,7 @@ def update_user_comment(username, comment):
     conn = psycopg2.connect(database=db_name, user=db_user, password=db_pass)
     cur = conn.cursor()
 
-    cmd = 'UPDATE users SET comment = %s WHERE username = %s;'
+    cmd = 'UPDATE users SET comment = %s WHERE gt_username = %s;'
     data = (comment, username)
 
     cur.execute(cmd, data)

@@ -112,88 +112,6 @@
         <div class="modal-body">
           <div class="container">
             <div class="row col-md-6 custyle table-responsive">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wendsday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                  </tr>
-                </thead>
-                <tr>
-                  <td bgcolor="green">8:00AM</td>
-                  <td>8:00AM</td>
-                  <td bgcolor="green">8:00AM</td>
-                  <td>8:00AM</td>
-                  <td bgcolor="green">8:00AM</td>
-                </tr>
-                <tr>
-                  <td>9:00AM</td>
-                  <td>9:00AM</td>
-                  <td>9:00AM</td>
-                  <td>9:00AM</td>
-                  <td>9:00AM</td>
-                </tr>
-                <tr>
-                  <td>10:00AM</td>
-                  <td>10:00AM</td>
-                  <td>10:00AM</td>
-                  <td>10:00AM</td>
-                  <td>10:00AM</td>
-                </tr>
-                <tr>
-                  <td bgcolor="green">11:00AM</td>
-                  <td>11:00AM</td>
-                  <td bgcolor="green">11:00AM</td>
-                  <td bgcolor="green">11:00AM</td>
-                  <td>11:00AM</td>
-                </tr>
-                <tr>
-                  <td>12:00PM</td>
-                  <td>12:00PM</td>
-                  <td bgcolor="green">12:00PM</td>
-                  <td bgcolor="green">12:00PM</td>
-                  <td>12:00PM</td>
-                </tr>
-                <tr>
-                  <td>1:00PM</td>
-                  <td>1:00PM</td>
-                  <td>1:00PM</td>
-                  <td>1:00PM</td>
-                  <td>1:00PM</td>
-                </tr>
-                <tr>
-                  <td>2:00PM</td>
-                  <td>2:00PM</td>
-                  <td>2:00PM</td>
-                  <td>2:00PM</td>
-                  <td>2:00PM</td>
-                </tr>
-                <tr>
-                  <td>3:00PM</td>
-                  <td>3:00PM</td>
-                  <td>3:00PM</td>
-                  <td>3:00PM</td>
-                  <td>3:00PM</td>
-                </tr>
-                <tr>
-                  <td>4:00PM</td>
-                  <td>4:00PM</td>
-                  <td>4:00PM</td>
-                  <td>4:00PM</td>
-                  <td>4:00PM</td>
-                </tr>
-                <tr>
-                  <td>5:00PM</td>
-                  <td>5:00PM</td>
-                  <td>5:00PM</td>
-                  <td>5:00PM</td>
-                  <td>5:00PM</td>
-                </tr>
-
-              </table>
 
               <h3>Team Information</h3>
               <table class="table table-striped">
@@ -287,24 +205,16 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Profile</h4>
+          <h4 class="modal-title">Welcome to Team Building App!</h4>
         </div>
         <div class="modal-body">
           <div class="container">
             <div class="row col-md-6 custyle">
               
-              <h4>Introduction</h4>
-              <form action="/updateIntroduction" method="post">
-                <textarea class="form-control" rows="5" id="intro" name="introtext"></textarea>
-                <br />
-                <input type="submit" name="update" class="btn btn-primary" value="Update Intro" />
-              </form>
+              Please visit your profile page to set a bio!
 
             </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
 
@@ -327,17 +237,25 @@
   </script>
 
   <script type="text/javascript">
+
     function getCookie(name) {
       var value = "; " + document.cookie;
       var parts = value.split("; " + name + "=");
       if (parts.length == 2) return parts.pop().split(";").shift();
     }
 
-    var cookie = getCookie('firsttime');
-    if (cookie) {
-      // alert('Please go to your profile to set your bio!');
-      $('#firsttime').modal('show');
+    function delete_cookie( name ) {
+      document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
+
+    $(document).ready(function(){
+      var cookie = getCookie('firsttime');
+      if (cookie) {
+        $('#firsttime-modal').modal('show');
+        delete_cookie('firsttime');
+      }
+    });
+    
   </script>
 
 </body>

@@ -14,14 +14,17 @@ def main():
 # @login_required
 def prof_home():
     #profile, classes = db_util.get_user_info()
-    return render_template('prof_home.html', classes)
+    # return render_template('prof_home.html', classes)
+    return render_template('prof_home.html')
 
 @app.route("/student_home")
 # Uncomment this to require CAS to access this page
 # @login_required
 def student_home():
     firsttime = request.cookies.get('firsttime')
-    return render_template('student_home.html')
+    resp = make_response(render_template('student_home.html'))
+    # resp.set_cookie('firsttime', '', expires=0)
+    return resp
 
 @app.route("/signin_error")
 def signin_error():
@@ -45,8 +48,8 @@ def login():
             print(s)
 
         if gtusername in all_students:
-            session.username = gtusername
-            session.firsttime = True
+            session['username'] = gtusername
+            session['firsttime'] = True
         else:
             return redirect(url_for('signin_error'))
         # check if they exist
@@ -61,5 +64,5 @@ def login():
 def updateIntroduction():
     if request.method == 'POST':
         text = request.form.get('introtext')
-        update_user_comment(session.username, text)
+        update_user_comment(session['username'], text)
         return redirect(url_for('student_home'))
