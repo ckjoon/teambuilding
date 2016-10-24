@@ -1,6 +1,7 @@
 from teambuildingapp import app
 from flask import render_template, request, url_for, redirect, session, make_response
 from flask_cas import login_required
+import db_util
 
 from teambuildingapp.db_util import update_user_comment, get_all_student_usernames
 
@@ -13,7 +14,8 @@ def main():
 # Uncomment this to require CAS to access this page
 # @login_required
 def prof_home():
-    return render_template('prof_home.html')
+    db_util
+    return render_template('prof_home.html', classes)
 
 @app.route("/student_home")
 # Uncomment this to require CAS to access this page
