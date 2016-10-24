@@ -1,7 +1,6 @@
 from teambuildingapp import app
 from flask import render_template, request, url_for, redirect, session, make_response
 from flask_cas import login_required
-import db_util
 
 from teambuildingapp.db_util import update_user_comment, get_all_student_usernames
 
