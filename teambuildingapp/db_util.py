@@ -14,7 +14,7 @@ def create_class(class_name, semester, instructor_username):
     cur.close()
     conn.close()
 
-def create_team(team_name, class_id, gt_username, team_name):
+def create_team(class_id, gt_username, team_name):
     conn = psycopg2.connect(database=db_name, user=db_user, password=db_pass)
     cur = conn.cursor()
 
@@ -27,7 +27,7 @@ def create_team(team_name, class_id, gt_username, team_name):
     cur.close()
     conn.close()
 
-def add_to_team(team_name, class_id, gt_username, team_name):
+def add_to_team(class_id, gt_username, team_name):
     conn = psycopg2.connect(database=db_name, user=db_user, password=db_pass)
     cur = conn.cursor()
 
@@ -116,7 +116,7 @@ def register_user(username, is_instructor, email, first_name, last_name):
     conn = psycopg2.connect(database=db_name, user=db_user, password=db_pass)
     cur = conn.cursor()
 
-    cmd = 'INSERT INTO users (gt_username, is_instructor, email, first_name, last_name, profile_comment) VALUES (%s, %s, %s, %s, %s, %s);'
+    cmd = 'INSERT INTO users (gt_username, is_instructor, email, first_name, last_name, comment) VALUES (%s, %s, %s, %s, %s, %s);'
     data = (username, is_instructor, email, first_name, last_name, '')
 
     cur.execute(cmd, data)
@@ -129,8 +129,7 @@ def mass_register_users(userlist):
     conn = psycopg2.connect(database=db_name, user=db_user, password=db_pass)
     cur = conn.cursor()
 
-    cmd = 'INSERT INTO users (gt_username, is_instructor, email, first_name, last_name, profile_comment) VALUES ' + '(%s, %s, %s, %s, %s, %s), '*(len(userlist)-1) + '(%s, %s, %s, %s, %s, %s);'
-
+    cmd = 'INSERT INTO users (gt_username, is_instructor, email, first_name, last_name, comment) VALUES ' + '(%s, %s, %s, %s, %s, %s), '*(len(userlist)//6-1) + '(%s, %s, %s, %s, %s, %s);'
     cur.execute(cmd, userlist)
     conn.commit()
 
@@ -143,16 +142,18 @@ def enroll_from_roster(students, class_id):
 
     registered_students = get_all_student_usernames()
 
-    roster_vals = (,)
-    registration_vals = (,)
+    roster_vals = ()
+    registration_vals = ()
     for s in students:
         roster_vals  += (class_id, s[0])
         if s[0] not in registered_students:
             registration_vals += (s[0], False, s[1], s[2], s[3], '')
 
-    cmd = 'INSERT INTO rosters (class_id, gt_username) VALUES (product_no, name, price) VALUES ' + '(%s, %s), '*(len(students)-1) + '(%s, %s);'
+    mass_register_users(registration_vals)
+
+    cmd = 'INSERT INTO rosters (class_id, gt_username) VALUES ' + '(%s, %s), '*(len(students)-1) + '(%s, %s);'
+    cur.execute(cmd, roster_vals)
+    conn.commit()
 
     cur.close()
     conn.close()
-
-    mass_register_users(registration_vals)
