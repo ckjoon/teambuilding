@@ -30,6 +30,10 @@ Inside config.py add the following properties:
                                       # what kind of person is logging in.
     #CAS_ATTRIBUTES_SESSION_KEY = 'supersecretsessionkey' #set your own unique session key here
     SECRET_KEY = 'supersecretsessionkey' #set your own unique session key here
+
+    db_name = 'teambuilding'
+    db_user = 'postgres'
+    db_pass = '11111' # CHANGE THIS!
 ```
 
 Start the server with `python3 runserver.py`

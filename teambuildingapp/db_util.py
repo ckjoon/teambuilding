@@ -1,5 +1,5 @@
 import psycopg2
-from config import *
+from teambuildingapp.config import *
 
 def create_class(class_name, semester, instructor_username):
     conn = psycopg2.connect(database=db_name, user=db_user, password=db_pass)
@@ -105,7 +105,7 @@ def get_all_student_usernames():
     cmd = 'SELECT gt_username FROM users WHERE is_instructor = FALSE'
     cur.execute(cmd)
 
-    student_usernames = {x[0] for x in cur.fetchall()}
+    student_usernames = [x[0] for x in cur.fetchall()]
 
     cur.close()
     conn.close()

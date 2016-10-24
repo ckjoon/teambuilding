@@ -2,7 +2,7 @@ from teambuildingapp import app
 from flask import render_template, request, url_for, redirect, session, make_response
 from flask_cas import login_required
 
-# from db_util import update_user_comment, get_all_student_usernames
+from teambuildingapp.db_util import update_user_comment, get_all_student_usernames
 
 
 @app.route("/")
@@ -37,6 +37,10 @@ def login():
         password = request.form.get('password')
 
         all_students = get_all_student_usernames()
+        print(gtusername)
+        print(all_students)
+        for s in all_students:
+            print(s)
 
         if gtusername in all_students:
             session.username = gtusername
