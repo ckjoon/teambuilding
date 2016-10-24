@@ -67,11 +67,11 @@ def setup_classes_table():
     cur = conn.cursor()
 
     cmd = """CREATE TABLE CLASSES(
-   CLASS_ID                  SERIAL              NOT NULL UNIQUE,
+   CLASS_ID                  SERIAL              NOT NULL PRIMARY KEY,
    INSTRUCTOR_GT_USERNAME    TEXT                REFERENCES USERS (GT_USERNAME),
    CLASS_NAME                TEXT                NOT NULL,
    CLASS_SEMESTER            TEXT                NOT NULL,
-   PRIMARY KEY(CLASS_NAME, CLASS_SEMESTER)
+   UNIQUE(CLASS_NAME, CLASS_SEMESTER)
 );"""
 
     cur.execute(cmd)
