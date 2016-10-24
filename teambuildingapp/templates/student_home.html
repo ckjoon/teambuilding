@@ -279,6 +279,38 @@
     </div>
   </div>
 
+  <!-- Modal for Firsttime -->
+  <div id="firsttime-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Profile</h4>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div class="row col-md-6 custyle">
+              
+              <h4>Introduction</h4>
+              <form action="/updateIntroduction" method="post">
+                <textarea class="form-control" rows="5" id="intro" name="introtext"></textarea>
+                <br />
+                <input type="submit" name="update" class="btn btn-primary" value="Update Intro" />
+              </form>
+
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <script>
     function pressRequest() {
       if (document.getElementById("send").innerHTML == "Send request") {
@@ -291,6 +323,20 @@
 
       }
 
+    }
+  </script>
+
+  <script type="text/javascript">
+    function getCookie(name) {
+      var value = "; " + document.cookie;
+      var parts = value.split("; " + name + "=");
+      if (parts.length == 2) return parts.pop().split(";").shift();
+    }
+
+    var cookie = getCookie('firsttime');
+    if (cookie) {
+      // alert('Please go to your profile to set your bio!');
+      $('#firsttime').modal('show');
     }
   </script>
 

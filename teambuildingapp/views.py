@@ -21,10 +21,7 @@ def prof_home():
 # @login_required
 def student_home():
     firsttime = request.cookies.get('firsttime')
-    if firsttime == 'true':
-        return render_template('student_home_firsttime.html')
-    else:
-        return render_template('student_home.html')
+    return render_template('student_home.html')
 
 @app.route("/signin_error")
 def signin_error():
@@ -39,7 +36,7 @@ def login():
     #handle login stuff.
     if request.method == 'POST':
         gtusername = request.form.get('gtusername')
-        password = request.form.get('password')
+        # password = request.form.get('password')
 
         all_students = get_all_student_usernames()
         print(gtusername)
