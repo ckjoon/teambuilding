@@ -2,10 +2,9 @@ import xlrd
 import db_util
 
 class RosterProcessor:
-    def __init__(self, file, class_id, instructor):
+    def __init__(self, file, class_id):
         self.file = file
         self.students = []
-        self.instructor = instructor
         self.class_id = class_id
 
     def process(self):
@@ -17,13 +16,13 @@ class RosterProcessor:
             if r[-1] == 'Student':
                 name = r[0].split(', ')
                 self.students.append( (r[1], r[2], name[1], name[0]) )
-
         #print(self.students)
 
     def export_to_db(self):
         db_util.enroll_from_roster(self.students, self.class_id)
 
 # uncomment below for testing
-#f = open('./../rosters/CS3600_roster.xls', 'rb+')
-#instance = RosterProcessor(f.read(), 'CS3600_123id', 'professor0')
+#f = open('./../rosters/csxxxx_roster.xls', 'rb+')
+#instance = RosterProcessor(f.read(), 1)
 #instance.process()
+#instance.export_to_db()
