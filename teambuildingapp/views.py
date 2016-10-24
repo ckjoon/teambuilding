@@ -22,7 +22,11 @@ def student_home():
 def login():
     #handle login stuff.
     if request.method == 'POST':
-        if request.form.get('gtusername') != "jchoi302":
+        gtusername = request.form.get('gtusername')
+        password = request.form.get('password')
+
+        # check if they exist
+        if gtusername != "jchoi302":
             return redirect(url_for('student_home'))
         else:
             return redirect(url_for('prof_home'))

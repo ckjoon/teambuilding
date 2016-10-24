@@ -260,92 +260,12 @@
         <div class="modal-body">
           <div class="container">
             <div class="row col-md-6 custyle">
-              <h4> Availability</h4>
-              <table class="table ">
-                <thead>
-
-                  <tr>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wendsday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                  </tr>
-                </thead>
-                <tr>
-                  <td>8:00AM</td>
-                  <td>8:00AM</td>
-                  <td>8:00AM</td>
-                  <td>8:00AM</td>
-                  <td>8:00AM</td>
-                </tr>
-                <tr>
-                  <td>9:00AM</td>
-                  <td>9:00AM</td>
-                  <td bgcolor="green">9:00AM</td>
-                  <td>9:00AM</td>
-                  <td>9:00AM</td>
-                </tr>
-                <tr>
-                  <td>10:00AM</td>
-                  <td>10:00AM</td>
-                  <td>10:00AM</td>
-                  <td bgcolor="green">10:00AM</td>
-                  <td>10:00AM</td>
-                </tr>
-                <tr>
-                  <td>11:00AM</td>
-                  <td>11:00AM</td>
-                  <td>11:00AM</td>
-                  <td>11:00AM</td>
-                  <td>11:00AM</td>
-                </tr>
-                <tr>
-                  <td bgcolor="green">12:00PM</td>
-                  <td>12:00PM</td>
-                  <td>12:00PM</td>
-                  <td>12:00PM</td>
-                  <td>12:00PM</td>
-                </tr>
-                <tr>
-                  <td>1:00PM</td>
-                  <td>1:00PM</td>
-                  <td>1:00PM</td>
-                  <td>1:00PM</td>
-                  <td bgcolor="green">1:00PM</td>
-                </tr>
-                <tr>
-                  <td>2:00PM</td>
-                  <td>2:00PM</td>
-                  <td>2:00PM</td>
-                  <td bgcolor="green">2:00PM</td>
-                  <td>2:00PM</td>
-                </tr>
-                <tr>
-                  <td bgcolor="green">3:00PM</td>
-                  <td>3:00PM</td>
-                  <td>3:00PM</td>
-                  <td>3:00PM</td>
-                  <td>3:00PM</td>
-                </tr>
-                <tr>
-                  <td>4:00PM</td>
-                  <td>4:00PM</td>
-                  <td>4:00PM</td>
-                  <td>4:00PM</td>
-                  <td>4:00PM</td>
-                </tr>
-                <tr>
-                  <td>5:00PM</td>
-                  <td>5:00PM</td>
-                  <td>5:00PM</td>
-                  <td>5:00PM</td>
-                  <td>5:00PM</td>
-                </tr>
-
-              </table>
+              
               <h4>Introduction</h4>
-              <textarea class="form-control" rows="5" id="intro"></textarea>
+              <form action="/updateIntroduction" method="post">
+                <textarea class="form-control" rows="5" id="intro"></textarea>
+                <input type="submit" name="update" class="btn btn-primary" value="Update Intro" />
+              </form>
 
             </div>
           </div>
