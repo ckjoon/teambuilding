@@ -22,7 +22,7 @@ class RosterProcessor:
         db_util.enroll_from_roster(self.students, self.class_id)
 
 # uncomment below for testing
-f = open('./../rosters/CS3600_roster.xls', 'rb+')
-instance = RosterProcessor(f.read(), 1)
-instance.process()
-instance.export_to_db()
+#f = open('./../rosters/csxxxx_roster.xls', 'rb+')
+#instance = RosterProcessor(f.read(), 1)
+#instance.process()
+#instance.export_to_db()

@@ -3,4 +3,4 @@ __pycache__
 .vscode/*
 .DS_Store
 config.py
-rosters/*
+rosters/CS3600_roster.xls
