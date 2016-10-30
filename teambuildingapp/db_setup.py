@@ -71,6 +71,7 @@ def setup_classes_table():
    INSTRUCTOR_GT_USERNAME    TEXT                REFERENCES USERS (GT_USERNAME),
    CLASS_NAME                TEXT                NOT NULL,
    CLASS_SEMESTER            TEXT                NOT NULL,
+   MAX_TEAM_SIZE             INTEGER             NOT NULL,
    UNIQUE(CLASS_NAME, CLASS_SEMESTER)
 );"""
 
@@ -95,7 +96,7 @@ def setup_rosters_table():
 
 def main():
     global conn
-    conn = psycopg2.connect(database=db_name, user=db_user, password=db_pass)
+    conn = psycopg2.connect(**db)
     setup_tables()
 
 
