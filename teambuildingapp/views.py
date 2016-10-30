@@ -26,6 +26,11 @@ def student_home():
     # resp.set_cookie('firsttime', '', expires=0)
     return resp
 
+@app.route("/api/viewteam", methods=['GET']):
+def to_team_manager_panel():
+    if request.method = 'GET':
+        return redirect(url_for('prof_home'))
+
 @app.route("/signin_error")
 def signin_error():
     return render_template('signin_error.html')
@@ -60,12 +65,13 @@ def login():
         else:
             return redirect(url_for('signin_error'))
         # check if they exist
-        if is_professor:
+        if is_student:
             resp = make_response(redirect(url_for('student_home')))
             resp.set_cookie('firsttime', 'true')
             return resp
         else:
             return redirect(url_for('prof_home'))
+        
 
 @app.route("/updateIntroduction", methods=['POST'])
 def updateIntroduction():
