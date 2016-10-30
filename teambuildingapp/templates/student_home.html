@@ -97,7 +97,7 @@
                     </tbody>
                 </table>
 
-                <button class="btn btn-info btn-md" style="margin:10px; float:right;"> + Create Team</button>
+                <button class="btn btn-info btn-md" style="margin:10px; float:right;" data-toggle="modal" data-target="#createteam"> + Create Team </button>
             </div>
         </div>
     </div>
@@ -222,6 +222,39 @@
 
         </div>
     </div>
+
+    <!-- Modal for create team -->
+    <div id="createteam" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Create Team</h4>
+                </div>
+                <div class="modal-body">
+
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="teamname">Team Name</label>
+                            <input type="text" class="form-control" id="teamname">
+                        </div>
+
+                        <button type="button" class="btn btn btn-success" onclick="myFunction()">
+                            Create Team
+                        </button>
+                    </form>
+
+                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
     <script>
         function pressRequest() {
