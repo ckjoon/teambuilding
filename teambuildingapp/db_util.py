@@ -139,6 +139,17 @@ def get_all_student_usernames():
 
     return student_usernames
 
+def get_all_professor_usernames():
+    conn = psycopg2.connect(database=db_name, user=db_user, password=db_pass)
+    cur = conn.cursor()
+
+    cmd = 'SELECT gt_username FROM users WHERE is_instructor = TRUE'
+    cur.execute(cmd)
+    professor_usernames = [x[0] for x in cur.fetchall()]
+    cur.close()
+    conn.close()
+    return professor_usernames
+
 def register_user(username, is_instructor, email, first_name, last_name):
     conn = psycopg2.connect(database=db_name, user=db_user, password=db_pass)
     cur = conn.cursor()

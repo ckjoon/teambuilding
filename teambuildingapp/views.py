@@ -2,7 +2,7 @@ from teambuildingapp import app
 from flask import render_template, request, url_for, redirect, session, make_response
 from flask_cas import login_required
 
-from teambuildingapp.db_util import update_user_comment, get_all_student_usernames
+from teambuildingapp.db_util import *
 
 
 @app.route("/")
@@ -42,18 +42,25 @@ def login():
         # password = request.form.get('password')
 
         all_students = get_all_student_usernames()
+        all_professors = get_all_professor_usernames()
+        print(all_professors)
+        
         print(gtusername)
         print(all_students)
         for s in all_students:
             print(s)
-
+        is_student = True
         if gtusername in all_students:
+            session['username'] = gtusername
+            session['firsttime'] = True
+        elif gtusername in all_professors:
+            is_professor = False
             session['username'] = gtusername
             session['firsttime'] = True
         else:
             return redirect(url_for('signin_error'))
         # check if they exist
-        if gtusername != "jchoi302":
+        if is_professor:
             resp = make_response(redirect(url_for('student_home')))
             resp.set_cookie('firsttime', 'true')
             return resp
