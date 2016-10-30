@@ -22,18 +22,13 @@ Create a file in the base directory of the project named 'config.py'.
 Inside config.py add the following properties:
 
 ```
-    DB_URI = "postgresql://yourusername:yourpassword@localhost/teambuilding",
-    DB_USER = "db_username",
-    db_pass = "123456",
-    CAS_SERVER = 'https://login.gatech.edu/cas/serviceValidate',
-    CAS_AFTER_LOGIN  = 'student_home' # CHANGE THIS: needs to redirect to somehow determine
-                                      # what kind of person is logging in.
-    #CAS_ATTRIBUTES_SESSION_KEY = 'supersecretsessionkey' #set your own unique session key here
-    SECRET_KEY = 'supersecretsessionkey' #set your own unique session key here
-
-    db_name = 'teambuilding'
-    db_user = 'postgres'
-    db_pass = '11111' # CHANGE THIS!
+db = {
+    'database': 'teambuilding',
+    'user': 'postgres',
+    'password': '12345', # CHANGE THIS!
+    'host': '111.111.111.111',
+    'port': '1111'
+}
 ```
 
 Start the server with `python3 runserver.py`
