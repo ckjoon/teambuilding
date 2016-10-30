@@ -124,6 +124,20 @@ def enroll_student(username, class_id):
 
     cur.close()
     conn.close()
+    
+def unenroll_student(username, class_id):
+    conn = psycopg2.connect(database=db_name, user=db_user, password=db_pass)
+    cur = conn.cursor()
+
+    cmd = 'DELETE FROM rosters WHERE class_id = %s AND gt_username = %s  );'
+    data = (class_id, username)
+
+    cur.execute(cmd, data)
+    conn.commit()
+
+    cur.close()
+    conn.close()
+    
 
 def get_all_student_usernames():
     conn = psycopg2.connect(database=db_name, user=db_user, password=db_pass)

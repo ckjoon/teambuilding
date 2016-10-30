@@ -73,5 +73,3 @@ def updateIntroduction():
         text = request.form.get('introtext')
         update_user_comment(session['username'], text)
         return redirect(url_for('student_home'))
-    if request.method == 'GET':
-        
