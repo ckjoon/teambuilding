@@ -137,7 +137,19 @@ def unenroll_student(username, class_id):
 
     cur.close()
     conn.close()
+
+def get_professor_classes(username):
+    conn = psycopg2.connect(database=db_name, user=db_user, password=db_pass)
+    cur = conn.cursor()
+
+    cmd = 'SELECT class_id FROM classes WHERE gt_username = %s  );'
+    data = (username)
     
+    cur.execute(cmd, data)
+    conn.commit()
+
+    cur.close()
+    conn.close()
 
 def get_all_student_usernames():
     conn = psycopg2.connect(database=db_name, user=db_user, password=db_pass)
