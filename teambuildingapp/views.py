@@ -26,7 +26,6 @@ def student_home():
     # resp.set_cookie('firsttime', '', expires=0)
     return resp
 
-@app.route("/api/viewteam", methods=['GET']):
 def to_team_manager_panel():
     if request.method = 'GET':
         return redirect(url_for('prof_home'))
