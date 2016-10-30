@@ -41,6 +41,17 @@ def create_class(class_name, semester, instructor_username):
     cur.close()
     conn.close()
 
+def get_all_team_in_class(class_id):
+    conn = psycopg2.connect(database=db_name, user=db_user, password=db_pass)
+    cur = conn.cursor()
+    
+    cmd = 'SELECT * FROM teams WHERE class_id = %s GROUP BY team_id'
+    cur.execute(cmd,data)
+    conn.commit()
+    
+    cur.close()
+    conn.close()
+    
 def create_team(class_id, gt_username, team_name):
     conn = psycopg2.connect(database=db_name, user=db_user, password=db_pass)
     cur = conn.cursor()
@@ -112,6 +123,21 @@ def update_user_comment(username, comment):
     cur.close()
     conn.close()
 
+    
+def get_user_comment(username):
+    conn = psycopg2.connect(database=db_name, user=db_user, password=db_pass)
+    cur = conn.cursor()
+
+    cmd = 'SELECT comment from users WHERE gt_username = %s;'
+    data = (username)
+
+    cur.execute(cmd, data)
+    conn.commit()
+
+    cur.close()
+    conn.close()
+    
+    
 def enroll_student(username, class_id):
     conn = psycopg2.connect(database=db_name, user=db_user, password=db_pass)
     cur = conn.cursor()
