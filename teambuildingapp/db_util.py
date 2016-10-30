@@ -42,7 +42,7 @@ def create_class(class_name, semester, instructor_username, max_team_size=5):
     conn.close()
 
 def get_all_team_in_class(class_id):
-    conn = psycopg2.connect(database=db_name, user=db_user, password=db_pass)
+    conn = psycopg2.connect(**db)
     cur = conn.cursor()
     
     cmd = 'SELECT * FROM teams WHERE class_id = %s GROUP BY team_id'
@@ -138,7 +138,7 @@ def update_user_comment(username, comment):
 
     
 def get_user_comment(username):
-    conn = psycopg2.connect(database=db_name, user=db_user, password=db_pass)
+    conn = psycopg2.connect(**db)
     cur = conn.cursor()
 
     cmd = 'SELECT comment from users WHERE gt_username = %s;'
@@ -165,7 +165,7 @@ def enroll_student(username, class_id):
     conn.close()
     
 def unenroll_student(username, class_id):
-    conn = psycopg2.connect(database=db_name, user=db_user, password=db_pass)
+    conn = psycopg2.connect(**db)
     cur = conn.cursor()
 
     cmd = 'DELETE FROM rosters WHERE class_id = %s AND gt_username = %s  );'
@@ -178,7 +178,7 @@ def unenroll_student(username, class_id):
     conn.close()
 
 def get_professor_classes(username):
-    conn = psycopg2.connect(database=db_name, user=db_user, password=db_pass)
+    conn = psycopg2.connect(**db)
     cur = conn.cursor()
 
     cmd = 'SELECT class_id FROM classes WHERE gt_username = %s  );'
@@ -205,7 +205,7 @@ def get_all_student_usernames():
     return student_usernames
 
 def get_all_professor_usernames():
-    conn = psycopg2.connect(database=db_name, user=db_user, password=db_pass)
+    conn = psycopg2.connect(**db)
     cur = conn.cursor()
 
     cmd = 'SELECT gt_username FROM users WHERE is_instructor = TRUE'
