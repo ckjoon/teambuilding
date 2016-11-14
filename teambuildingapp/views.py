@@ -24,9 +24,11 @@ def student_home():
     firsttime = request.cookies.get('firsttime')
     #username = request.cookies.get('username')
     username = session['username']
+    class_id = session['class_id']
     print(username)
     student_comment = get_user_comment(username)
     student_enrolled_classes = get_student_enrolled_classnames(username)
+    teams = get_all_teams_in_class(class_id)
     print(student_comment)
     print(student_enrolled_classes)
     resp = make_response(render_template('student_home.html',comment = student_comment, classes = student_enrolled_classes));
@@ -39,7 +41,7 @@ def signin_error():
 
 @app.route("/team_manager_panel")
 def team_manager_panel():
-    return render_template('team_manager_panel.html')
+    return render_template('team_manager_panel.html',)
 
 @app.route("/api/login", methods=['POST'])
 def login():
@@ -50,6 +52,8 @@ def login():
 
         all_students = get_all_student_usernames()
         all_professors = get_all_professor_usernames()
+        class_ids = get_student_enrolled_class_id(gtusername)
+        print(class_ids)
         #print(all_professors)
         
         #print(gtusername)
@@ -60,10 +64,12 @@ def login():
         if gtusername in all_students:
             session['username'] = gtusername
             session['firsttime'] = True
+            session['class_id'] = class_ids[0]
         elif gtusername in all_professors:
             is_professor = False
             session['username'] = gtusername
             session['firsttime'] = True
+            session['class_id'] = class_ids[0]
         else:
             return redirect(url_for('signin_error'))
         # check if they exist

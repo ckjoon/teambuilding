@@ -32,7 +32,7 @@ def create_class(class_name, semester, instructor_username, max_team_size=5):
     conn = psycopg2.connect(**db)
     cur = conn.cursor()
 
-    cmd = 'INSERT INTO classes (class_name, class_semester, instructor_gt_username, max_team_size) VALUES (\'%s\', \'%s\', \'%s\', \'%s\');';
+    cmd = 'INSERT INTO classes (class_name, class_semester, instructor_gt_username, max_team_size) VALUES (%s, %s, %s, %s);'
     data = (class_name, semester, instructor_username, max_team_size)
 
     cur.execute(cmd, data)
@@ -41,20 +41,21 @@ def create_class(class_name, semester, instructor_username, max_team_size=5):
     cur.close()
     conn.close()
 
-def get_all_team_in_class(class_id):
+def get_all_teams_in_class(class_id):
     conn = psycopg2.connect(**db)
     cur = conn.cursor()
     
     cmd = 'SELECT * FROM teams WHERE class_id = %s GROUP BY team_id'
-    cur.execute(cmd,data)
-    conn.commit()
+    data = (class_id,)
 
-    all_teams = [x[0] for x in cur.fetchall()]
+    cur.execute(cmd,data)
+    
+    all_teams = cur.fetchall()
     
     cur.close()
     conn.close()
     
-    return  [x[0] for x in all_teams]
+    return  all_teams
     
 def create_team(class_id, gt_username, team_name):
     conn = psycopg2.connect(**db)
@@ -147,12 +148,12 @@ def get_user_comment(username):
 
     cmd = 'SELECT comment from users WHERE gt_username = %s;'
     data = (username,)
-    print(cur.mogrify(cmd, data))
+    #print(cur.mogrify(cmd, data))
     cur.execute(cmd, data)
     conn.commit()
 
     comment =  cur.fetchone()
-    print(comment)
+
     cur.close()
     conn.close()
 
@@ -189,13 +190,12 @@ def get_professor_classes(username):
     conn = psycopg2.connect(**db)
     cur = conn.cursor()
 
-    cmd = 'SELECT class_id FROM classes WHERE gt_username = %s  );'
-    data = (username)
+    cmd = 'SELECT class_id FROM classes WHERE instructor_gt_username = %s;'
+    data = (username,)
     
     cur.execute(cmd, data)
-    conn.commit()
 
-    classes = cur.fetchall()
+    classes = [x[0] for x in cur.fetchall()]
 
     cur.close()
     conn.close()
@@ -207,8 +207,8 @@ def get_all_student_usernames():
     cur = conn.cursor()
 
     cmd = 'SELECT gt_username FROM users WHERE is_instructor = FALSE;'
+    
     cur.execute(cmd)
-    conn.commit()
 
     student_usernames = [x[0] for x in cur.fetchall()]
 
@@ -222,8 +222,8 @@ def get_all_professor_usernames():
     cur = conn.cursor()
 
     cmd = 'SELECT gt_username FROM users WHERE is_instructor = TRUE;'
+    
     cur.execute(cmd)
-    conn.commit()
 
     professor_usernames = [x[0] for x in cur.fetchall()]
     
@@ -264,13 +264,30 @@ def get_student_enrolled_classnames(username):
     data = (username,)
 
     cur.execute(cmd, data)
-    
+
     class_names = [x[0] for x in cur.fetchall()]
 
     cur.close()
     conn.close()
     
     return class_names
+
+def get_student_enrolled_class_id(username):
+    conn = psycopg2.connect(**db)
+    cur = conn.cursor()
+
+    cmd = 'SELECT class_id from classes where class_id in (SELECT class_id from rosters WHERE gt_username = %s);'
+    data = (username,)
+
+    cur.execute(cmd, data)
+
+    class_names = [x[0] for x in cur.fetchall()]
+
+    cur.close()
+    conn.close()
+    
+    return class_names
+
 
 
 def enroll_from_roster(students, class_id):
