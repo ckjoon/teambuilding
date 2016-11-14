@@ -48,6 +48,7 @@ def get_all_team_in_class(class_id):
     cmd = 'SELECT * FROM teams WHERE class_id = %s GROUP BY team_id'
     cur.execute(cmd,data)
     conn.commit()
+    all_teams = 
     
     cur.close()
     conn.close()
@@ -143,12 +144,16 @@ def get_user_comment(username):
 
     cmd = 'SELECT comment from users WHERE gt_username = \'%s\';'
     data = (username)
-
+    
     cur.execute(cmd, data)
     conn.commit()
 
+    comment = [x[0] for x in cur.fetchall()]
+
     cur.close()
     conn.close()
+
+    return comment
     
     
 def enroll_student(username, class_id):
@@ -187,8 +192,12 @@ def get_professor_classes(username):
     cur.execute(cmd, data)
     conn.commit()
 
+    classes = [x[0] for x in cur.fetchall()]
+
     cur.close()
     conn.close()
+    
+    return classes
 
 def get_all_student_usernames():
     conn = psycopg2.connect(**db)
@@ -196,6 +205,7 @@ def get_all_student_usernames():
 
     cmd = 'SELECT gt_username FROM users WHERE is_instructor = FALSE'
     cur.execute(cmd)
+    conn.commit()
 
     student_usernames = [x[0] for x in cur.fetchall()]
 
@@ -210,9 +220,13 @@ def get_all_professor_usernames():
 
     cmd = 'SELECT gt_username FROM users WHERE is_instructor = TRUE'
     cur.execute(cmd)
+    conn.commit()
+
     professor_usernames = [x[0] for x in cur.fetchall()]
+    
     cur.close()
     conn.close()
+    
     return professor_usernames
 
 def register_user(username, is_instructor, email, first_name, last_name):
@@ -248,10 +262,12 @@ def get_student_enrolled_classnames(username):
 
     cur.execute(cmd, data)
     conn.commit()
+
     class_names = [x[0] for x in cur.fetchall()]
 
     cur.close()
     conn.close()
+    
     return class_names
 
 
