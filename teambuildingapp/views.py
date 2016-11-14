@@ -22,13 +22,14 @@ def prof_home():
 # @login_required
 def student_home():
     firsttime = request.cookies.get('firsttime')
-    username = request.cookies.get('username')
-    print (username)
+    #username = request.cookies.get('username')
+    username = session['username']
+    print(username)
     student_comment = get_user_comment(username)
     student_enrolled_classes = get_student_enrolled_classnames(username)
-    for s in student_enrolled_classes:
-        print (s)
-    resp = make_response(render_template('student_home.html',comment = student_comment));
+    print(student_comment)
+    print(student_enrolled_classes)
+    resp = make_response(render_template('student_home.html',comment = student_comment, classes = student_enrolled_classes));
     # resp.set_cookie('firsttime', '', expires=0)
     return resp
 
@@ -49,12 +50,12 @@ def login():
 
         all_students = get_all_student_usernames()
         all_professors = get_all_professor_usernames()
-        print(all_professors)
+        #print(all_professors)
         
-        print(gtusername)
-        print(all_students)
-        for s in all_students:
-            print(s)
+        #print(gtusername)
+        #print(all_students)
+        #for s in all_students:
+            #print(s)
         is_student = True
         if gtusername in all_students:
             session['username'] = gtusername
