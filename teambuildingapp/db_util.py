@@ -48,7 +48,7 @@ def get_all_team_in_class(class_id):
     cmd = 'SELECT * FROM teams WHERE class_id = %s GROUP BY team_id'
     cur.execute(cmd,data)
     conn.commit()
-    all_teams = 
+    all_teams = [x[0] for x in cur.fetchall()]
     
     cur.close()
     conn.close()
