@@ -31,8 +31,9 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Choose course<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">CS 2340 A (Spring 2016)</a></li>
-                            <li><a href="#">CS 4400 B (Spring 2016)</a></li>
+                        {% for class in classes %}
+                            <li><a href="#">{{n}}</a></li>
+                        {% endfor %}
                         </ul>
                     </li>
                     <li><a onclick>My team</a></li>
@@ -183,7 +184,7 @@
                             <p style="visibility:hidden" id="welcome">Welcome to Team Building App Please set up your profile</p>
                             <h4>Introduction</h4>
                             <form action="/updateIntroduction" method="post">
-                                <textarea class="form-control" rows="5" id="intro" name="introtext"></textarea>
+                                <textarea class="form-control" rows="5" id="intro" name="introtext" >{{comment}}</textarea>
                                 <br />
                                 <input type="submit" name="update" class="btn btn-primary" value="Update Intro" />
                             </form>

@@ -22,7 +22,13 @@ def prof_home():
 # @login_required
 def student_home():
     firsttime = request.cookies.get('firsttime')
-    resp = make_response(render_template('student_home.html'))
+    username = request.cookies.get('username')
+    print (username)
+    student_comment = get_user_comment(username)
+    student_enrolled_classes = get_student_enrolled_classnames(username)
+    for s in student_enrolled_classes:
+        print (s)
+    resp = make_response(render_template('student_home.html',comment = student_comment));
     # resp.set_cookie('firsttime', '', expires=0)
     return resp
 
