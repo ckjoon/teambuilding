@@ -38,7 +38,7 @@
                     </li>
                     <li><a href="/team_manager_panel">My team</a></li>
                     <li><a href="#profile" data-toggle="modal">Profile</a></li>
-                    <li><a href="signin.html">Sign out</a></li>
+                    <li><a href="/">Sign out</a></li>
                 </ul>
             </div>
             <!--/.nav-collapse -->
@@ -62,39 +62,15 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for team in teams %}
                         <tr>
-                            <td class=""><a href="#team" data-toggle="modal">Team 17</a></td>
-                            <td class="">Oleg Filatov (ofilatov@gatech.edu)</td>
+                            <td class=""><a href="#team" data-toggle="modal">{{team[0]}}</a></td>
+                            <td class="">{{team[1]}}</td>
                             <td class="">5/5</td>
                             <td><span class="label label-danger">Full</span></td>
                             <td><span class="label label-warning btn-xs">Request sent</span></td>
                         </tr>
-                        <tr>
-                            <td class=""><a href="#">Team 16</a></td>
-                            <td class="">Thomas Jefferson (tjefferson@gatech.edu)</td>
-                            <td class="">4/5</td>
-                            <td><span class="label label-success">Available</span></td>
-                            <td>
-                                <button type="button" id="send" class="btn btn-info btn-xs" onclick="pressRequest()">Send request</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class=""><a href="#">Team 15</a></td>
-                            <td class="">Alexander Hamilton (ahamilton@gatech.edu)</td>
-                            <td class="">3/5</td>
-                            <td><span class="label label-success">Available</span></td>
-                            <td><span class="label label-warning btn-xs">Request sent</span></td>
-                        </tr>
-                        <tr>
-                            <td class=""><a href="#">Team 14</a></td>
-                            <td class="">Benjamin Franklin (bfranklin@gatech.edu)</td>
-                            <td class="">2/5</td>
-                            <td><span class="label label-success">Available</span></td>
-                            <td>
-                                <button type="button" class="btn btn-info btn-xs">Send request</button>
-                            </td>
-                        </tr>
-
+                        {% endfor %}
                     </tbody>
                 </table>
 

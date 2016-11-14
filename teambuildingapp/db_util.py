@@ -45,7 +45,7 @@ def get_all_teams_in_class(class_id):
     conn = psycopg2.connect(**db)
     cur = conn.cursor()
     
-    cmd = 'SELECT * FROM teams WHERE class_id = %s GROUP BY team_id'
+    cmd = 'SELECT team_name, gt_username FROM teams WHERE class_id = %s AND is_captain = True;'
     data = (class_id,)
 
     cur.execute(cmd,data)
