@@ -90,3 +90,11 @@ def updateIntroduction():
         text = request.form.get('introtext')
         update_user_comment(session['username'], text)
         return redirect(url_for('student_home'))
+
+@app.route("/createTeam", methods=['POST'])
+def createTeam():
+    if request.method == 'POST':
+        text = request.form.get('team_name')
+        print(text)
+        create_team(session['class_id'],session['username'], text)
+        return redirect(url_for('student_home'))
