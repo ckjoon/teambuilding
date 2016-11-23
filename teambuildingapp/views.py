@@ -53,8 +53,10 @@ def login():
 
         all_students = get_all_student_usernames()
         all_professors = get_all_professor_usernames()
-        class_ids = get_student_enrolled_class_id(gtusername)
-        print(class_ids)
+        student_class_ids = get_student_enrolled_class_id(gtusername)
+        prof_class_ids = get_professor_classes(gtusername)
+
+        print(student_class_ids)
         #print(all_professors)
         
         #print(gtusername)
@@ -65,12 +67,12 @@ def login():
         if gtusername in all_students:
             session['username'] = gtusername
             session['firsttime'] = True
-            session['class_id'] = class_ids[0]
+            session['class_id'] = student_class_ids[0]
         elif gtusername in all_professors:
-            is_professor = False
+            is_student = False
             session['username'] = gtusername
             session['firsttime'] = True
-            session['class_id'] = class_ids[0]
+            session['class_id'] = prof_class_ids[0]
         else:
             return redirect(url_for('signin_error'))
         # check if they exist
