@@ -69,11 +69,14 @@
                             <td class="">{{team[3]}}/{{max_team_size}}</td>
                             {% if team[3] == max_team_size %}
                             <td><span class="label label-danger">Full</span></td>
+                            <td><span class="label label-warning btn-xs">Not Available</span></td>
+
                             {% else %}
                             <td><span class="label label-success">Available</span></td>
+                            <td><span class="label label-success btn-xs">Request </span></td>
+                            <td><span class="label label-warning btn-xs">Request Sent</span></td>
                             {%endif%}
-                            <td><span class="label label-warning btn-xs">Request sent</span></td>
-                        </tr>
+                            </tr>
                         {% endfor %}
                     </tbody>
                 </table>

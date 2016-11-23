@@ -34,7 +34,7 @@ def student_home():
     print(student_enrolled_classes)
     print(all_teams)
     resp = make_response(render_template('student_home.html',comment = student_comment, max_team_size = teamsize, classes = student_enrolled_classes, teams = all_teams));
-    # resp.set_cookie('firsttime', '', expires=0)
+    resp.set_cookie('firsttime', '', expires=0)
     return resp
 
 @app.route("/signin_error")
@@ -51,11 +51,11 @@ def login():
     if request.method == 'POST':
         gtusername = request.form.get('gtusername')
         # password = request.form.get('password')
-
         all_students = get_all_student_usernames()
         all_professors = get_all_professor_usernames()
         student_class_ids = get_student_enrolled_class_id(gtusername)
         prof_class_ids = get_professor_classes(gtusername)
+        
 
         print(student_class_ids)
         #print(all_professors)
@@ -69,6 +69,8 @@ def login():
             session['username'] = gtusername
             session['firsttime'] = True
             session['class_id'] = student_class_ids[0]
+            team_id = get_student_enrolled_team_id(session['username'], session['class_id'])
+            session['team_id'] = team_id  
         elif gtusername in all_professors:
             is_student = False
             session['username'] = gtusername
@@ -77,6 +79,9 @@ def login():
         else:
             return redirect(url_for('signin_error'))
         # check if they exist
+        if session['team_id']:
+            resp = make_response(redirect(url_for('team_manager_panel')))
+            return resp
         if is_student:
             resp = make_response(redirect(url_for('student_home')))
             resp.set_cookie('firsttime', 'true')

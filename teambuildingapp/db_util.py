@@ -116,6 +116,20 @@ def remove_from_team(team_id, gt_username):
     cur.close()
     conn.close()
 
+def student_in_team(gt_username, class_id):
+    conn = psycopg2.connect(**db)
+    cur = conn.cursor()
+
+    cmd = 'DELETE FROM teams WHERE team_id = %s AND gt_username = %s;'
+    data = (team_id, gt_username)
+
+    cur.execute(cmd, data)
+    conn.commit()
+
+    cur.close()
+    conn.close()
+
+
 def assign_team_captain(team_id, gt_username):
     conn = psycopg2.connect(**db)
     cur = conn.cursor()
@@ -294,6 +308,22 @@ def get_student_enrolled_class_id(username):
     conn.close()
     
     return class_names
+
+def get_student_enrolled_team_id(gt_username, class_id):
+    conn = psycopg2.connect(**db)
+    cur = conn.cursor()
+
+    cmd = 'SELECT team_id from teams where class_id = %s AND gt_username = %s;'
+    data = (class_id, gt_username)
+
+    cur.execute(cmd, data)
+
+    team_id = cur.fetchone()[0]
+    
+    cur.close()
+    conn.close()
+    
+    return team_id
 
 def get_class_max_team_size(class_id):
     conn = psycopg2.connect(**db)
