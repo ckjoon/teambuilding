@@ -19,6 +19,10 @@ def setup_tables():
     if 'teams' not in tables:
         print('Teams table not found, creating one...')
         setup_teams_table()
+    
+    if 'requests' not in tables:
+        print('Requests table not found, creating one...')
+        setup_requests_table()
 
 def get_tables():
     cur = conn.cursor()
@@ -87,6 +91,20 @@ def setup_rosters_table():
    CLASS_ID                  INTEGER              NOT NULL REFERENCES CLASSES (CLASS_ID),
    GT_USERNAME               TEXT                 NOT NULL REFERENCES USERS (GT_USERNAME),
    PRIMARY KEY(CLASS_ID, GT_USERNAME)
+);"""
+
+    cur.execute(cmd)
+    conn.commit()
+
+    cur.close()
+
+def setup_requests_table():
+    cur = conn.cursor()
+
+    cmd = """CREATE TABLE REQUESTS(
+   TEAM_ID                  INTEGER              NOT NULL REFERENCES CLASSES (CLASS_ID),
+   GT_USERNAME               TEXT                 NOT NULL REFERENCES USERS (GT_USERNAME),
+   PRIMARY KEY(TEAM_ID, GT_USERNAME)
 );"""
 
     cur.execute(cmd)

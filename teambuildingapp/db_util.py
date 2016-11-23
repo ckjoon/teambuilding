@@ -295,6 +295,22 @@ def get_student_enrolled_class_id(username):
     
     return class_names
 
+def get_class_max_team_size(class_id):
+    conn = psycopg2.connect(**db)
+    cur = conn.cursor()
+
+    cmd = 'SELECT max_team_size from classes where class_id = %s;'
+    data = (class_id,)
+
+    cur.execute(cmd, data)
+
+    class_max = [x[0] for x in cur.fetchall()]
+
+    cur.close()
+    conn.close()
+    
+    return class_max
+
 
 
 def enroll_from_roster(students, class_id):

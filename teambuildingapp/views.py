@@ -28,11 +28,12 @@ def student_home():
     print(username)
     student_comment = get_user_comment(username)
     student_enrolled_classes = get_student_enrolled_classnames(username)
+    teamsize = get_class_max_team_size(class_id)
     all_teams = get_all_teams_in_class(class_id)
     print(student_comment)
     print(student_enrolled_classes)
     print(all_teams)
-    resp = make_response(render_template('student_home.html',comment = student_comment, classes = student_enrolled_classes, teams = all_teams));
+    resp = make_response(render_template('student_home.html',comment = student_comment, max_team_size = teamsize, classes = student_enrolled_classes, teams = all_teams));
     # resp.set_cookie('firsttime', '', expires=0)
     return resp
 
