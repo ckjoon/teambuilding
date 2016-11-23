@@ -1,5 +1,5 @@
 import psycopg2
-from teambuildingapp.config import *
+from config import *
 
 def get_user_info(username):
     conn = psycopg2.connect(**db)
@@ -255,7 +255,7 @@ def register_user(username, is_instructor, email, first_name, last_name):
 def mass_register_users(userlist):
     conn = psycopg2.connect(**db)
     cur = conn.cursor()
-
+    print(userlist)
     cmd = 'INSERT INTO users (gt_username, is_instructor, email, first_name, last_name, comment) VALUES ' + '(%s, %s, %s, %s, %s, %s), '*(len(userlist)//6-1) + '(%s, %s, %s, %s, %s, %s);'
     cur.execute(cmd, userlist)
     conn.commit()
@@ -304,8 +304,8 @@ def get_class_max_team_size(class_id):
 
     cur.execute(cmd, data)
 
-    class_max = [x[0] for x in cur.fetchall()]
-
+    class_max = cur.fetchone()[0]
+    print('debug'+str(class_max))
     cur.close()
     conn.close()
     
@@ -318,7 +318,7 @@ def enroll_from_roster(students, class_id):
     cur = conn.cursor()
 
     registered_students = get_all_student_usernames()
-
+    print (registered_students)
     roster_vals = ()
     registration_vals = ()
     for s in students:

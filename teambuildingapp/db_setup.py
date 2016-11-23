@@ -1,5 +1,5 @@
 import psycopg2
-from config import *
+from teambuildingapp.config import *
 
 def setup_tables():
     tables = get_tables()
@@ -59,6 +59,7 @@ def setup_teams_table():
    TEAM_NAME      TEXT                 NOT NULL,
    IS_CAPTAIN     BOOL                 NOT NULL,
    COMMENT        TEXT,
+   UNIQUE(TEAM_ID),
    PRIMARY KEY(TEAM_ID, CLASS_ID, GT_USERNAME)
 );"""
 
@@ -76,7 +77,7 @@ def setup_classes_table():
    CLASS_NAME                TEXT                NOT NULL,
    CLASS_SEMESTER            TEXT                NOT NULL,
    MAX_TEAM_SIZE             INTEGER             NOT NULL,
-   UNIQUE(CLASS_NAME, CLASS_SEMESTER)
+   UNIQUE(CLASS_ID, CLASS_NAME, CLASS_SEMESTER)
 );"""
 
     cur.execute(cmd)
@@ -102,9 +103,10 @@ def setup_requests_table():
     cur = conn.cursor()
 
     cmd = """CREATE TABLE REQUESTS(
-   TEAM_ID                  INTEGER              NOT NULL REFERENCES CLASSES (CLASS_ID),
+   CLASS_ID                  INTEGER              NOT NULL REFERENCES CLASSES (CLASS_ID),
+   TEAM_ID                   INTEGER              NOT NULL REFERENCES TEAMS (TEAM_ID),
    GT_USERNAME               TEXT                 NOT NULL REFERENCES USERS (GT_USERNAME),
-   PRIMARY KEY(TEAM_ID, GT_USERNAME)
+   PRIMARY KEY(CLASS_ID)
 );"""
 
     cur.execute(cmd)

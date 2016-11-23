@@ -64,9 +64,9 @@
                     <tbody>
                         {% for team in teams %}
                         <tr>
-                            <td class=""<a href="#team" data-toggle="modal">{{team[0]}}</a></td>
+                            <td class=""><a href="#team" data-toggle="modal">{{team[0]}}</a></td>
                             <td class="">{{team[1]}}({{team[2]}})</td>
-                            <td class="">{{team[3]}}/{max_team_size}</td>
+                            <td class="">{{team[3]}}/{{max_team_size}}</td>
                             {% if team[3] == max_team_size %}
                             <td><span class="label label-danger">Full</span></td>
                             {% else %}
