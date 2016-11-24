@@ -10,7 +10,37 @@
     <script src="../static/js/bootstrap.min.js"></script>
 
     <link href="../static/team_manager_panel.css" rel="stylesheet">
-
+    <style>
+    .divTable{
+	display: table;
+	width: 100%;
+    }
+    .divTableRow {
+        display: table-row;
+    }
+    .divTableHeading {
+        background-color: #EEE;
+        display: table-header-group;
+    }
+    .divTableCell, .divTableHead {
+        border: 1px solid #999999;
+        display: table-cell;
+        padding: 3px 10px;
+    }
+    .divTableHeading {
+        background-color: #EEE;
+        display: table-header-group;
+        font-weight: bold;
+    }
+    .divTableFoot {
+        background-color: #EEE;
+        display: table-footer-group;
+        font-weight: bold;
+    }
+    .divTableBody {
+        display: table-row-group;
+    }
+    </style>
 </head>
 
 <body>
@@ -89,37 +119,41 @@
                         <td class="text-center"><a class='btn btn-success btn-xs' href="#"> Appoint </a> <a href="#" class="btn btn-danger btn-xs"> Remove</a></td>
                     </tr>
                     !-->
-                    
+                {% if user_captain == True %}    
                 </table>
 
                 <h3><br> <u>Pending requests</u></h3>
                 <br>
-                <table class="table table-striped custab">
-                    <thead>
 
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th class="text-center">Action</th>
-                        </tr>
-                    </thead>
-                    <tr>
-                        <td>George Washington</td>
-                        <td>gwashington@gatech.edu</td>
-                        <td class="text-center"><a class='btn btn-success btn-xs' href="#"> Accept</a> <a href="#" class="btn btn-danger btn-xs"> Decline</a></td>
-                    </tr>
-                    <tr>
-                        <td>Theodore Roosevelt</td>
-                        <td>troosevelt@gatech.edu</td>
-                        <td class="text-center"><a class='btn btn-success btn-xs' href="#"> Accept</a> <a href="#" class="btn btn-danger btn-xs"> Decline</a></td>
-                    </tr>
-                    <tr>
-                        <td>Franklin Roosevelt</td>
-                        <td>fdroosevelt@gatech.edu</td>
-                        <td class="text-center"><a class='btn btn-success btn-xs' href="#"> Accept</a> <a href="#" class="btn btn-danger btn-xs"> Decline</a></td>
-                    </tr>
-                </table>
+                <div class="table divTable">
+                    <div class = "divTableBody">
+                        <div class = "divTableRow">
+
+                            <div class = "divTableCell">Name</div>
+                            <div class = "divTableCell">Email</div>
+                            <div class = "divTableCell text-center">Action</div>
+                        </div>
+                        {% for request in requests%}
+
+                        <div class = "divTableRow">
+                            <div class = "divTableCell">{{request[1]}} {{request[2]}}</div>
+                            <div class = "divTableCell">{{request[3]}}</div>
+                            <div class = "divTableCell text-center">       
+                                <form action="/acceptdecline" method="post">
+                                    <input type="hidden" value="{{request[0]}}" name = "gt_username" />
+                                    <input type = "submit" class="btn btn-success btn-xs" value="Accept" name="submit" />
+                                    <input type = "submit" class="btn btn-danger btn-xs" value="Decline" name="submit" />
+                                </form>
+                            </div>
+                        </div>
+                        {%endfor%}
+
+                    </div>
+                </div>
+                {%endif%}
+                <!--
                 <a href="#" class="btn btn-primary btn-xs pull-right"><b>+</b> Invite a student</a>
+                !-->
             </div>
         </div>
     </div>

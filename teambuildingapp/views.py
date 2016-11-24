@@ -52,17 +52,16 @@ def team_manager_panel():
     team_captain_name = get_student_name(team_captain)
     user_captain = False
     students = get_all_students_in_team(class_id, team_id)
-    print(students)
-        
+    requests = get_all_students_request(class_id, team_id)
+
     if session['username'] == team_captain:
         user_captain = True  
-    for student in students:
-        print (session['username']==student[0])
+
     resp = make_response( 
         render_template('team_manager_panel.html', 
                         team_name = team_name, team_captain_name = team_captain_name, 
                         user_captain = user_captain, students_in_team = students,
-                         current_user = session['username']))
+                         current_user = session['username'], requests = requests ))
     return resp
 
 @app.route("/api/login", methods=['POST'])
@@ -122,3 +121,16 @@ def createTeam():
         print(text)
         create_team(session['class_id'],session['username'], text)
         return redirect(url_for('student_home'))
+
+@app.route("/acceptdecline", methods=['POST'])
+def accept_decline():
+    if request.method == 'POST':
+        text = request.form.get('gt_username')
+        print(text)
+        if (request.form['submit']=='Accept'):
+            add_to_team(session['class_id'], session['team_id'], text)
+
+        if (request.form['submit']=='Decline'):
+            remove_from_requests(session['class_id'], session['team_id'], text)
+
+        return redirect(url_for('team_manager_panel'))

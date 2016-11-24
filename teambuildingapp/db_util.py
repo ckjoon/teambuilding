@@ -77,7 +77,7 @@ def create_team(class_id, gt_username, team_name):
     cur.close()
     conn.close()
 
-def add_to_team(class_id, gt_username, team_name):
+def add_to_team(class_id, team_id, gt_username):
     conn = psycopg2.connect(**db)
     cur = conn.cursor()
     
@@ -86,16 +86,30 @@ def add_to_team(class_id, gt_username, team_name):
     cur.execute(cmd, data)
     max_size = int(cur.fetchone()[0])
 
-    cmd = 'SELECT gt_username FROM teams WHERE class_id = %s AND team_name = %s;'
-    data = (class_id, team_name)
+    cmd = 'SELECT gt_username FROM teams WHERE class_id = %s AND team_id = %s;'
+    data = (class_id, team_id)
     cur.execute(cmd, data)
     cur_size = len(cur.fetchall()) 
+
+    team_name = get_team_name(class_id, team_id)
 
     if cur_size == max_size:
         raise Exception('Cannot add more team members because the limit is reached')
 
     cmd = 'INSERT INTO teams (class_id, gt_username, team_name, is_captain) VALUES (%s, %s, %s, %s);'
     data = (class_id, gt_username, team_name, False)
+
+    cur.execute(cmd, data)
+    conn.commit()
+
+    cur.close()
+    conn.close()
+def remove_from_requests(class_id, team_id, gt_username):
+    conn = psycopg2.connect(**db)
+    cur = conn.cursor()
+
+    cmd = 'DELETE FROM requests WHERE class_id = %s AND team_id = %s AND gt_username = %s;'
+    data = (class_id, team_id, gt_username)
 
     cur.execute(cmd, data)
     conn.commit()
@@ -278,6 +292,24 @@ def get_all_students_in_team(class_id, team_id):
     conn.close()
 
     return students_in_team
+
+def get_all_students_request(class_id, team_id):
+    conn = psycopg2.connect(**db)
+    cur = conn.cursor()
+
+    cmd = 'SELECT gt_username, first_name, last_name, email FROM users WHERE gt_username in (SELECT gt_username from requests where class_id = %s AND team_id = %s);'
+    data = (class_id, team_id)
+    print(cur.mogrify(cmd, data))
+
+    cur.execute(cmd, data)
+
+    requests = cur.fetchall()
+
+    cur.close()
+    conn.close()
+
+    return requests
+
 
 def get_all_student_usernames():
     conn = psycopg2.connect(**db)
