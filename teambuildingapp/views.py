@@ -33,7 +33,9 @@ def student_home():
     print(student_comment)
     print(student_enrolled_classes)
     print(all_teams)
-    resp = make_response(render_template('student_home.html',comment = student_comment, max_team_size = teamsize, classes = student_enrolled_classes, teams = all_teams));
+    resp = make_response(render_template('student_home.html',
+                        comment = student_comment, max_team_size = teamsize, 
+                        classes = student_enrolled_classes, teams = all_teams));
     resp.set_cookie('firsttime', '', expires=0)
     return resp
 
@@ -43,7 +45,25 @@ def signin_error():
 
 @app.route("/team_manager_panel")
 def team_manager_panel():
-    return render_template('team_manager_panel.html',)
+    team_id = session['team_id']
+    class_id = session['class_id']
+    team_name = get_team_name(class_id, team_id)
+    team_captain = get_team_captain(class_id, team_id)
+    team_captain_name = get_student_name(team_captain)
+    user_captain = False
+    students = get_all_students_in_team(class_id, team_id)
+    print(students)
+        
+    if session['username'] == team_captain:
+        user_captain = True  
+    for student in students:
+        print (session['username']==student[0])
+    resp = make_response( 
+        render_template('team_manager_panel.html', 
+                        team_name = team_name, team_captain_name = team_captain_name, 
+                        user_captain = user_captain, students_in_team = students,
+                         current_user = session['username']))
+    return resp
 
 @app.route("/api/login", methods=['POST'])
 def login():
@@ -55,11 +75,9 @@ def login():
         all_professors = get_all_professor_usernames()
         student_class_ids = get_student_enrolled_class_id(gtusername)
         prof_class_ids = get_professor_classes(gtusername)
-        
 
         print(student_class_ids)
         #print(all_professors)
-        
         #print(gtusername)
         #print(all_students)
         #for s in all_students:
@@ -79,7 +97,7 @@ def login():
         else:
             return redirect(url_for('signin_error'))
         # check if they exist
-        if session['team_id']:
+        if session['team_id'] != None:
             resp = make_response(redirect(url_for('team_manager_panel')))
             return resp
         if is_student:

@@ -47,9 +47,12 @@
     <div class="container" style="margin-top:50px">
         <div class="container">
             <div class="row col-md-6 col-md-offset-2 table-responsitve">
-                <h2><u> Team 17 </u></h2>
-
-                <h4><br>Team manager: Yeonjoon Choi <small>(you)</small></h4>
+                <h2><u> {{team_name}}</u></h2>
+                {%if user_captain == True %}
+                <h4><br>Team manager: {{team_captain_name[0]}} {{team_captain_name[1]}}  <small>(you)</small></h4>
+                {% else %}
+                <h4><br>Team manager: {{team_captain_name[0]}} {{team_captain_name[1]}}</h4>
+                {% endif %}
                 <br>
                 <h3> <u>Current team members</u></h3>
                 <br>
@@ -62,26 +65,31 @@
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
+                    {% for student in students_in_team%}
                     <tr>
-                        <td>Yeonjoon Choi <small>(you)</small></td>
-                        <td>ychoi302@gatech.edu</td>
+                        {% if student[0] == current_user%}
+                        <td>{{student[1]}} {{student[2]}} <small>(you)</small></td>
+                        {%else%}
+                        <td>{{student[1]}} {{student[2]}} </td>
+                        {%endif%}
+                        
+                        <td>{{student[3]}}</td>
+                        
+                        {% if current_user == student[0] %}
                         <td class="text-center"><a href="#" class="btn btn-danger btn-xs"> Leave the team</a></td>
+                        {% elif user_captain == True %}
+                        <td class="text-center"><a class='btn btn-success btn-xs' href="#"> Appoint </a> <a href="#" class="btn btn-danger btn-xs"> Remove</a></td>
+                        {%endif%}
                     </tr>
+                    {%endfor%}
+                    <!--
                     <tr>
                         <td>James Carter</td>
                         <td>jcarter@gatech.edu</td>
                         <td class="text-center"><a class='btn btn-success btn-xs' href="#"> Appoint </a> <a href="#" class="btn btn-danger btn-xs"> Remove</a></td>
                     </tr>
-                    <tr>
-                        <td>John Kennedy</td>
-                        <td>jkennedy@gatech.edu</td>
-                        <td class="text-center"><a class='btn btn-success btn-xs' href="#"> Appoint </a> <a href="#" class="btn btn-danger btn-xs"> Remove</a></td>
-                    </tr>
-                    <tr>
-                        <td>Franklin Roosevelt</td>
-                        <td>fdroosevelt@gatech.edu</td>
-                        <td class="text-center"><a class='btn btn-success btn-xs' href="#"> Appoint </a> <a href="#" class="btn btn-danger btn-xs"> Remove</a></td>
-                    </tr>
+                    !-->
+                    
                 </table>
 
                 <h3><br> <u>Pending requests</u></h3>

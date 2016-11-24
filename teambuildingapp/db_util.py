@@ -116,20 +116,6 @@ def remove_from_team(team_id, gt_username):
     cur.close()
     conn.close()
 
-def student_in_team(gt_username, class_id):
-    conn = psycopg2.connect(**db)
-    cur = conn.cursor()
-
-    cmd = 'DELETE FROM teams WHERE team_id = %s AND gt_username = %s;'
-    data = (team_id, gt_username)
-
-    cur.execute(cmd, data)
-    conn.commit()
-
-    cur.close()
-    conn.close()
-
-
 def assign_team_captain(team_id, gt_username):
     conn = psycopg2.connect(**db)
     cur = conn.cursor()
@@ -180,7 +166,60 @@ def get_user_comment(username):
 
     return comment[0]
     
+def get_team_captain(class_id, team_id):
+    conn = psycopg2.connect(**db)
+    cur = conn.cursor()
+
+    cmd = 'SELECT gt_username from teams WHERE class_id = %s AND team_id = %s AND is_captain = TRUE;'
+    data = (class_id, team_id)
     
+    cur.execute(cmd, data)
+    conn.commit()
+
+    team_captain =  str(cur.fetchone()[0])
+
+    cur.close()
+    conn.close()
+
+    return team_captain
+    
+def get_student_name(gt_username):
+    conn = psycopg2.connect(**db)
+    cur = conn.cursor()
+
+    cmd = 'SELECT first_name, last_name from users WHERE gt_username = %s;'
+    data = (gt_username,)
+    print(cur.mogrify(cmd, data))
+    cur.execute(cmd, data)
+    conn.commit()
+
+    name =  cur.fetchone()
+    print(name)
+
+    cur.close()
+    conn.close()
+
+    return name
+
+
+def get_student_info(username):
+    conn = psycopg2.connect(**db)
+    cur = conn.cursor()
+
+    cmd = 'SELECT first from teams WHERE class_id = %s AND team_id = %s AND is_captain = TRUE;'
+    data = (username,)
+    #print(cur.mogrify(cmd, data))
+
+    cur.execute(cmd, data)
+    conn.commit()
+
+    team_captain =  cur.fetchone()
+
+    cur.close()
+    conn.close()
+
+    return team_captain[0]
+
 def enroll_student(username, class_id):
     conn = psycopg2.connect(**db)
     cur = conn.cursor()
@@ -223,6 +262,23 @@ def get_professor_classes(username):
     
     return classes
 
+def get_all_students_in_team(class_id, team_id):
+    conn = psycopg2.connect(**db)
+    cur = conn.cursor()
+
+    cmd = 'SELECT gt_username, first_name, last_name, email FROM users WHERE gt_username in (SELECT gt_username from teams where class_id = %s AND team_id = %s);'
+    data = (class_id, team_id)
+    print(cur.mogrify(cmd, data))
+
+    cur.execute(cmd, data)
+
+    students_in_team = cur.fetchall()
+
+    cur.close()
+    conn.close()
+
+    return students_in_team
+
 def get_all_student_usernames():
     conn = psycopg2.connect(**db)
     cur = conn.cursor()
@@ -237,6 +293,21 @@ def get_all_student_usernames():
     conn.close()
 
     return student_usernames
+
+def get_team_name(class_id, team_id):
+    conn = psycopg2.connect(**db)
+    cur = conn.cursor()
+
+    cmd = 'SELECT team_name FROM teams WHERE class_id = %s AND team_id = %s;'
+    data = (class_id, team_id)
+    cur.execute(cmd, data)
+
+    team_name = cur.fetchone()[0]
+
+    cur.close()
+    conn.close()
+
+    return team_name
 
 def get_all_professor_usernames():
     conn = psycopg2.connect(**db)
@@ -318,7 +389,7 @@ def get_student_enrolled_team_id(gt_username, class_id):
 
     cur.execute(cmd, data)
 
-    team_id = cur.fetchone()[0]
+    team_id = cur.fetchone()
     
     cur.close()
     conn.close()
