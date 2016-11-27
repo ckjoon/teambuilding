@@ -1,5 +1,5 @@
 import psycopg2
-from teambuildingapp.config import *
+from config import *
 
 def setup_tables():
     tables = get_tables()
