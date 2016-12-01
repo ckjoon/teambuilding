@@ -106,7 +106,7 @@ def setup_requests_table():
    CLASS_ID                  INTEGER              NOT NULL REFERENCES CLASSES (CLASS_ID),
    TEAM_ID                   INTEGER              NOT NULL REFERENCES TEAMS (TEAM_ID),
    GT_USERNAME               TEXT                 NOT NULL REFERENCES USERS (GT_USERNAME),
-   PRIMARY KEY(CLASS_ID)
+   PRIMARY KEY(CLASS_ID, TEAM_ID, GT_USERNAME)
 );"""
 
     cur.execute(cmd)

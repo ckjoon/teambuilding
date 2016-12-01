@@ -104,6 +104,19 @@ def add_to_team(class_id, team_id, gt_username):
 
     cur.close()
     conn.close()
+
+def add_team_request(class_id, team_id, gt_username):
+    conn = psycopg2.connect(**db)
+    cur = conn.cursor()
+
+    cmd = 'INSERT INTO requests (class_id, team_id, gt_username) VALUES (%s, %s, %s)'
+    data = (class_id, team_id, gt_username)
+
+    cur.execute(cmd, data)
+    conn.commit()
+    cur.close()
+    conn.close()
+
 def remove_from_requests(class_id, team_id, gt_username):
     conn = psycopg2.connect(**db)
     cur = conn.cursor()

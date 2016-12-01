@@ -124,7 +124,7 @@ def login():
             #print(s)
         is_student = True
         if gtusername in all_students:
-            #student_class_ids = get_student_enrolled_class_id(gtusername)
+            student_class_ids = get_student_enrolled_class_id(gtusername)
             session['username'] = gtusername
             #session['firsttime'] = True
             if len(student_class_ids) > 0:
