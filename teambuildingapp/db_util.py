@@ -45,7 +45,7 @@ def get_all_teams_in_class(class_id):
     conn = psycopg2.connect(**db)
     cur = conn.cursor()
     
-    cmd = ('SELECT team_name, username, emails, countUsers '
+    cmd = ('SELECT team_name, username, emails, countUsers, teamid '
           'FROM ((SELECT team_name, team_id as teamid, COUNT(gt_username) '
           'as countUsers FROM teams where class_id = %s GROUP BY team_id, team_name ) t1 '
           ' INNER JOIN '
