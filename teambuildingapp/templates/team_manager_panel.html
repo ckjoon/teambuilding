@@ -78,10 +78,9 @@
         <div class="container">
             <div class="row col-md-6 col-md-offset-2 table-responsitve">
                 <h2><u> {{team_name}}</u></h2>
+                <h4><br>Team manager: {{team_captain_name[0]}} {{team_captain_name[1]}} 
                 {%if user_captain == True %}
-                <h4><br>Team manager: {{team_captain_name[0]}} {{team_captain_name[1]}}  <small>(you)</small></h4>
-                {% else %}
-                <h4><br>Team manager: {{team_captain_name[0]}} {{team_captain_name[1]}}</h4>
+                <small>(you)</small></h4>
                 {% endif %}
                 <br>
                 <h3> <u>Current team members</u></h3>

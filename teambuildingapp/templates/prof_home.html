@@ -29,15 +29,16 @@
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#">Home</a></li>
                     <li><a href="#createClass" data-toggle="modal">Add course section</a></li>
+                    {% if classes|length > 0 %}
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Choose course section<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">CS 2340 A (Spring 2016)</a></li>
-                            <li><a href="#">CS 2340 B (Spring 2016)</a></li>
-                            <li><a href="#">CS 2340 A (Fall 2015)</a></li>
-                            <li><a href="#">CS 2340 B (Fall 2015)</a></li>
+                        {% for class in classes %}
+                            <li><a href="#">{{class}}</a></li>
+                        {% endfor %}
                         </ul>
                     </li>
+                    {% endif %}
                     <li><a href="signin.html">Sign out</a></li>
                 </ul>
             </div>
@@ -46,13 +47,14 @@
     </div>
 
     <div class="container-panel">
-
         <div class="row">
             <div class="main">
-                <h2> CS 2340 A (Spring 2016)</h2>
+            {% if last_class != None %}
+
+                <h2>{{last_class[1]}}</h2>
                 <div class="panel-heading">
                     <i class="icon icon-chevron-up chevron"></i>
-                    <i class="icon icon-wrench pull-right"></i> Instructor panel
+                    <i class="icon icon-wrench pull-right"></i>
                 </div>
                 <div class="panel-content">
 
@@ -81,36 +83,25 @@
                             </tr>
                         </thead>
                         <tbody>
+                        {% for team in teams %}
                             <tr>
-                                <td class=""><a href="#team" data-toggle="modal">Team 17</a></td>
-                                <td class="">Benjamin Franklin (bfranklin@gatech.edu)</td>
-                                <td class="">5/5</td>
-                                <td><span class="label label-danger">Full</span></td>
+                                <td class=""><a href="#team" data-toggle="modal">{{team[0]}}</a></td>
+                                <td class="">{{team[1]}}({{team[2]}})</td>
+                                <td class="">{{team[3]}}/{{max_team_size}}</td>
+                                {% if team[3] == max_team_size %}
+                                    <td><span class="label label-danger">Full</span></td>
+                                    <!--<td><span class="label label-warning btn-xs">Not Available</span></td> -->
+                                {% else %}
+                                    <td><span class="label label-success">Available</span></td>
+                                {% endif %}
                             </tr>
-                            <tr>
-                                <td class=""><a href="#">Team 16</a></td>
-                                <td class="">Thomas Jefferson (tjefferson@gatech.edu)</td>
-                                <td class="">4/5</td>
-                                <td><span class="label label-success">Available</span></td>
-                            </tr>
-                            <tr>
-                                <td class=""><a href="#">Team 15</a></td>
-                                <td class="">Alexander Hamilton (ahamilton@gatech.edu)</td>
-                                <td class="">3/5</td>
-                                <td><span class="label label-success">Available</span></td>
-                            </tr>
-                            <tr>
-                                <td class=""><a href="#">Team 14</a></td>
-                                <td class="">Benjamin Franklin (bfranklin@gatech.edu)</td>
-                                <td class="">2/5</td>
-                                <td><span class="label label-success">Available</span></td>
-
-                            </tr>
-
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
-
+            {% else %}
+                <h2>Looks like you have no classes setup yet. To setup a class, upload T-Square roster corresponding to it by pressing "Add course section" in the navigation bar.</h2>
+            {% endif %}
             </div>
             <!--/panel-->
         </div>
@@ -187,22 +178,22 @@
                 </div>
                 <div class="modal-body">
 
-                    <form role="form">
+                    <form action="upload" method="post" enctype="multipart/form-data" role="form">
                         <div class="form-group">
-                            <label for="user">Section Name</label>
-                            <input type="text" class="form-control" id="user">
+                            <label for="coursename">Course and Section Name (ex. CS 2340 A)</label>
+                            <input type="text" class="form-control" id="coursename">
                         </div>
                         <div class="form-group">
-                            <label for="semester">Semester</label>
+                            <label for="semester">Semester (ex. Fall 2016)</label>
                             <input type="text" class="form-control" id="semester">
                         </div>
                         <div class="form-group">
                             <label for="teamsize">Size of the Team</label>
-                            <input type="number" class="form-control" id="teamsize">
+                            <input type="number" min="2" class="form-control" id="teamsize">
                         </div>
 
-
-                        <button type="button" class="btn btn btn-success" onclick="myFunction()">
+                        <input id="fileInput" type="file" style="display:none;" />
+                        <button type="submit" class="btn btn btn-success" onclick="document.getElementById('fileInput').click();">
                             Upload Roster
                         </button>
                     </form>

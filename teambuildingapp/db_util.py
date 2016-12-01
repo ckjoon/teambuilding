@@ -260,7 +260,7 @@ def unenroll_student(username, class_id):
     cur.close()
     conn.close()
 
-def get_professor_classes(username):
+def get_professor_class_ids(username):
     conn = psycopg2.connect(**db)
     cur = conn.cursor()
 
@@ -270,6 +270,22 @@ def get_professor_classes(username):
     cur.execute(cmd, data)
 
     classes = [x[0] for x in cur.fetchall()]
+
+    cur.close()
+    conn.close()
+    
+    return classes
+
+def get_professor_classes(username):
+    conn = psycopg2.connect(**db)
+    cur = conn.cursor()
+
+    cmd = 'SELECT class_id, class_name, class_semester, max_team_size FROM classes WHERE instructor_gt_username = %s;'
+    data = (username,)
+    
+    cur.execute(cmd, data)
+
+    classes = cur.fetchall()
 
     cur.close()
     conn.close()
