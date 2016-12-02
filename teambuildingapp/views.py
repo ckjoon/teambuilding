@@ -42,8 +42,8 @@ def prof_home():
     if 'last_class' not in session:
         classes = get_professor_classes(username)
         if len(classes) > 0:
-            session['last_class'] = (classes[0][0], '{0} ({1})'.format(x[0][1], x[0][2]))
-            session['max_team_size'] = x[0][3]
+            session['last_class'] = (classes[0][0], '{0} ({1})'.format(classes[0][1], classes[0][2]))
+            session['max_team_size'] = classes[0][3]
             session['class_names'] = ['{0} ({1})'.format(x[1], x[2]) for x in classes]
             session['teams'] = get_all_teams_in_class(session['last_class'][0])
             
@@ -76,7 +76,7 @@ def student_home():
         all_teams = get_all_teams_in_class(session['class_id'])
     
     student_comment = get_user_comment(username)
-    student_enrolled_classes = get_student_enrolled_classnames(username)
+    student_enrolled_classes = get_student_enrolled_classes(username)
     #print(student_comment)
     #print(student_enrolled_classes)
     #print(all_teams)
@@ -103,7 +103,7 @@ def team_manager_panel():
 
     if session['username'] == team_captain:
         user_captain = True  
-
+    
     resp = make_response( 
         render_template('team_manager_panel.html', 
                         team_name = team_name, team_captain_name = team_captain_name, 
@@ -152,8 +152,6 @@ def login():
             resp = make_response(redirect(url_for('prof_home')))
         else:
             return redirect(url_for('signin_error'))
-
-
         return resp
         
 
@@ -219,3 +217,11 @@ def ar():
             remove_from_team(session['team_id'], stu)
 
     return redirect(url_for('team_manager_panel'))
+
+@app.route("/chooseClass", methods=['POST'])
+def choose_classs():
+    if request.method == 'POST':
+        class_id = request.form.get('class')
+        print(class_id)
+        session['class_id'] = class_id
+        return redirect(url_for('student_home'))

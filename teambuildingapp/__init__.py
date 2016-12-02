@@ -9,6 +9,7 @@ CAS(app, '/cas') # this adds the prefix '/api/cas/' to the /login and /logout
 #db = SQLAlchemy(app)
 
 app.config.from_pyfile('config.py')
+
 app.secret_key = os.urandom(24)
 
 import teambuildingapp.views

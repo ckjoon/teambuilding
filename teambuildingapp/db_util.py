@@ -1,5 +1,5 @@
 import psycopg2
-from config import *
+from teambuildingapp.config import *
 
 def get_user_info(username):
     conn = psycopg2.connect(**db)
@@ -99,6 +99,8 @@ def add_to_team(class_id, team_id, gt_username):
     cmd = 'INSERT INTO teams (team_id, class_id, gt_username, team_name, is_captain) VALUES (%s, %s, %s, %s, %s);'
     data = (team_id, class_id, gt_username, team_name, False)
     print(cur.mogrify(cmd, data))
+
+    remove_from_requests(class_id, team_id, gt_username)
 
     cur.execute(cmd, data)
     conn.commit()
@@ -419,12 +421,30 @@ def get_student_enrolled_classnames(username):
 
     cur.execute(cmd, data)
 
-    class_names = [x[0] for x in cur.fetchall()]
+    class_names =  [x[0] for x in cur.fetchall()]
 
     cur.close()
     conn.close()
     
     return class_names
+
+def get_student_enrolled_classes(username):
+    conn = psycopg2.connect(**db)
+    cur = conn.cursor()
+
+    cmd = 'SELECT class_name, class_id from classes where class_id in (SELECT class_id from rosters WHERE gt_username = %s);'
+    data = (username,)
+
+    cur.execute(cmd, data)
+
+    class_names = cur.fetchall()
+
+    cur.close()
+    conn.close()
+    
+    return class_names
+
+
 
 def get_student_enrolled_class_id(username):
     conn = psycopg2.connect(**db)
