@@ -32,7 +32,12 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Choose course<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                         {% for class in classes %}
-                            <li><a href="#">{{class}}</a></li>
+                            <li>
+                                <form action="/chooseClass" method="post">
+                                    <input type="hidden" value="{{class[1]}}" name = "class" />
+                                    <input type = "submit" class="btn btn-success btn-xs" value="{{class[0]}}" name="submit" />
+                                </form>
+                            </li>
                         {% endfor %}
                         </ul>
                     </li>
@@ -270,6 +275,7 @@
 
         $(document).ready(function () {
             var cookie = getCookie('firsttime');
+            
             if (cookie) {
                 $('#profile').modal('show');
                 document.getElementById("welcome").removeAttribute("hidden")
