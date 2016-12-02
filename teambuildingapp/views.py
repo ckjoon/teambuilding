@@ -38,8 +38,8 @@ def prof_home():
     if 'last_class' not in session:
         classes = get_professor_classes(username)
         if len(classes) > 0:
-            session['last_class'] = (classes[0][0], '{0} ({1})'.format(x[0][1], x[0][2]))
-            session['max_team_size'] = x[0][3]
+            session['last_class'] = (classes[0][0], '{0} ({1})'.format(classes[0][1], classes[0][2]))
+            session['max_team_size'] = classes[0][3]
             session['class_names'] = ['{0} ({1})'.format(x[1], x[2]) for x in classes]
             session['teams'] = get_all_teams_in_class(session['last_class'][0])
             
