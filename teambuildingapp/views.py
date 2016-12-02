@@ -184,3 +184,11 @@ def accept_decline():
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+
+@app.route("/requestTeam", methods=['POST'])
+def requestTeam():
+    if request.method == 'POST':
+        team_id = request.form.get('team_id')
+        add_team_request(session['class_id'], team_id, session['username'])
+
+        return redirect(url_for('student_home'))

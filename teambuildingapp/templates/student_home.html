@@ -73,7 +73,12 @@
 
                             {% else %}
                             <td><span class="label label-success">Available</span></td>
-                            <td><span class="label label-success btn-xs">Request </span></td>
+                            <td>
+                                <form action="/requestTeam" method="POST">
+                                <input type="hidden" name="team_id" value="{{team[4]}}" />
+                                <input class="btn btn-success btn-xs" value="Request" type="submit" />
+                                </form>
+                            </td>
                             <td><span class="label label-warning btn-xs">Request Sent</span></td>
                             {%endif%}
                             </tr>

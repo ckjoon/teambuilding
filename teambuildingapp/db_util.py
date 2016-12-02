@@ -96,8 +96,9 @@ def add_to_team(class_id, team_id, gt_username):
     if cur_size == max_size:
         raise Exception('Cannot add more team members because the limit is reached')
 
-    cmd = 'INSERT INTO teams (class_id, gt_username, team_name, is_captain) VALUES (%s, %s, %s, %s);'
-    data = (class_id, gt_username, team_name, False)
+    cmd = 'INSERT INTO teams (team_id, class_id, gt_username, team_name, is_captain) VALUES (%s, %s, %s, %s, %s);'
+    data = (team_id, class_id, gt_username, team_name, False)
+    print(cur.mogrify(cmd, data))
 
     cur.execute(cmd, data)
     conn.commit()

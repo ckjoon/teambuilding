@@ -59,8 +59,7 @@ def setup_teams_table():
    TEAM_NAME      TEXT                 NOT NULL,
    IS_CAPTAIN     BOOL                 NOT NULL,
    COMMENT        TEXT,
-   UNIQUE(TEAM_ID),
-   PRIMARY KEY(TEAM_ID, CLASS_ID, GT_USERNAME)
+   PRIMARY KEY(CLASS_ID, TEAM_ID, GT_USERNAME)
 );"""
 
     cur.execute(cmd)
@@ -77,7 +76,7 @@ def setup_classes_table():
    CLASS_NAME                TEXT                NOT NULL,
    CLASS_SEMESTER            TEXT                NOT NULL,
    MAX_TEAM_SIZE             INTEGER             NOT NULL,
-   UNIQUE(CLASS_ID, CLASS_NAME, CLASS_SEMESTER)
+   PRIMARY KEY(CLASS_ID, CLASS_NAME, CLASS_SEMESTER)
 );"""
 
     cur.execute(cmd)
@@ -104,7 +103,7 @@ def setup_requests_table():
 
     cmd = """CREATE TABLE REQUESTS(
    CLASS_ID                  INTEGER              NOT NULL REFERENCES CLASSES (CLASS_ID),
-   TEAM_ID                   INTEGER              NOT NULL REFERENCES TEAMS (TEAM_ID),
+   TEAM_ID                   INTEGER              NOT NULL,
    GT_USERNAME               TEXT                 NOT NULL REFERENCES USERS (GT_USERNAME),
    PRIMARY KEY(CLASS_ID, TEAM_ID, GT_USERNAME)
 );"""
