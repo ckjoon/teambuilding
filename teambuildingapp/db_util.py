@@ -1,5 +1,5 @@
 import psycopg2
-from config import *
+from teambuildingapp.config import *
 
 def get_user_info(username):
     conn = psycopg2.connect(**db)
