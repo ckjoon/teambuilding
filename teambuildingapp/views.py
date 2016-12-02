@@ -28,7 +28,7 @@ def upload():
         print(teamsize)
 
         create_class(class_name, semester, session['username'], teamsize)
-        return redirect(url_for('/student_home'))
+        return redirect(url_for('prof_home'))
         
 
 @app.route("/prof_home")

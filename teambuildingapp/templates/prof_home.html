@@ -178,20 +178,13 @@
                 </div>
                 <div class="modal-body">
 
-                    <form action="upload" method="post" enctype="multipart/form-data" role="form">
-                        <div class="form-group">
-                            <label for="coursename">Course and Section Name (ex. CS 2340 A)</label>
-                            <input type="text" class="form-control" id="coursename">
-                        </div>
-                        <div class="form-group">
-                            <label for="semester">Semester (ex. Fall 2016)</label>
-                            <input type="text" class="form-control" id="semester">
-                        </div>
-                        <div class="form-group">
-                            <label for="teamsize">Size of the Team</label>
-                            <input type="number" min="2" class="form-control" id="teamsize">
-                        </div>
-
+                    <form action="upload" method="post">
+                        <label for="coursename">Course and Section Name (ex. CS 2340 A)</label>
+                        <input type="text" class="form-control" name="coursename">
+                        <label for="semester">Semester (ex. Fall 2016)</label>
+                        <input type="text" class="form-control" name="semester">
+                        <label for="teamsize">Size of the Team</label>
+                        <input type="number" min="2" class="form-control" name="teamsize">
                         <input type="submit" class="btn btn btn-success" value = "Create Class" />
                     </form>
 
