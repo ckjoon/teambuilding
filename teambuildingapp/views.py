@@ -10,6 +10,10 @@ from teambuildingapp.db_util import *
 def main():
     return render_template('signin.html')
 
+@app.route("/logout")
+def logout():
+    session.clear()
+
 # Route that will process the file upload
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -124,7 +128,7 @@ def login():
             #print(s)
         is_student = True
         if gtusername in all_students:
-            #student_class_ids = get_student_enrolled_class_id(gtusername)
+            student_class_ids = get_student_enrolled_class_id(gtusername)
             session['username'] = gtusername
             #session['firsttime'] = True
             if len(student_class_ids) > 0:
@@ -179,8 +183,17 @@ def accept_decline():
         if (request.form['submit']=='Decline'):
             remove_from_requests(session['class_id'], session['team_id'], text)
 
+        remove_from_requests(session['class_id'], session['team_id'], session['username'])
         return redirect(url_for('team_manager_panel'))
 
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+
+@app.route("/requestTeam", methods=['POST'])
+def requestTeam():
+    if request.method == 'POST':
+        team_id = request.form.get('team_id')
+        add_team_request(session['class_id'], team_id, session['username'])
+
+        return redirect(url_for('student_home'))

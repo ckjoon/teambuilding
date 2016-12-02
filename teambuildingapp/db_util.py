@@ -45,7 +45,7 @@ def get_all_teams_in_class(class_id):
     conn = psycopg2.connect(**db)
     cur = conn.cursor()
     
-    cmd = ('SELECT team_name, username, emails, countUsers '
+    cmd = ('SELECT team_name, username, emails, countUsers, teamid '
           'FROM ((SELECT team_name, team_id as teamid, COUNT(gt_username) '
           'as countUsers FROM teams where class_id = %s GROUP BY team_id, team_name ) t1 '
           ' INNER JOIN '
@@ -96,14 +96,28 @@ def add_to_team(class_id, team_id, gt_username):
     if cur_size == max_size:
         raise Exception('Cannot add more team members because the limit is reached')
 
-    cmd = 'INSERT INTO teams (class_id, gt_username, team_name, is_captain) VALUES (%s, %s, %s, %s);'
-    data = (class_id, gt_username, team_name, False)
+    cmd = 'INSERT INTO teams (team_id, class_id, gt_username, team_name, is_captain) VALUES (%s, %s, %s, %s, %s);'
+    data = (team_id, class_id, gt_username, team_name, False)
+    print(cur.mogrify(cmd, data))
 
     cur.execute(cmd, data)
     conn.commit()
 
     cur.close()
     conn.close()
+
+def add_team_request(class_id, team_id, gt_username):
+    conn = psycopg2.connect(**db)
+    cur = conn.cursor()
+
+    cmd = 'INSERT INTO requests (class_id, team_id, gt_username) VALUES (%s, %s, %s)'
+    data = (class_id, team_id, gt_username)
+
+    cur.execute(cmd, data)
+    conn.commit()
+    cur.close()
+    conn.close()
+
 def remove_from_requests(class_id, team_id, gt_username):
     conn = psycopg2.connect(**db)
     cur = conn.cursor()
