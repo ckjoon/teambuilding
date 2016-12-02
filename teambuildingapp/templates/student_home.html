@@ -64,8 +64,9 @@
                             <th>Manager</th>
                             <th>Spots filled</th>
                             <th>Status</th>
-
+                            {% if not in_team %}
                             <th style="width:100px">Actions</th>
+                            {%endif%}
                         </tr>
                     </thead>
                     <tbody>
@@ -80,6 +81,7 @@
 
                             {% else %}
                             <td><span class="label label-success">Available</span></td>
+                            {% if not in_team %}
                             <td>
                                 <form action="/requestTeam" method="POST">
                                 <input type="hidden" name="team_id" value="{{team[4]}}" />
@@ -87,6 +89,7 @@
                                 </form>
                             </td>
                             <td><span class="label label-warning btn-xs">Request Sent</span></td>
+                            {%endif%}
                             {%endif%}
                             </tr>
                         {% endfor %}
