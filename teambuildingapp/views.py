@@ -10,6 +10,10 @@ from teambuildingapp.db_util import *
 def main():
     return render_template('signin.html')
 
+@app.route("/logout")
+def logout():
+    session.clear()
+
 # Route that will process the file upload
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -179,6 +183,7 @@ def accept_decline():
         if (request.form['submit']=='Decline'):
             remove_from_requests(session['class_id'], session['team_id'], text)
 
+        remove_from_requests(session['class_id'], session['team_id'], session['username'])
         return redirect(url_for('team_manager_panel'))
 
 def allowed_file(filename):
