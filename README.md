@@ -1,9 +1,9 @@
-# teambuilding
+# Team 17: Team Building Application
 Team Building Application for Junior Design
 
 ## Release Notes
 New Features:
-    1. Professors can upload the class roster and see all the created teams with their availability and their team manager.
+    1. Professors can upload the class roster and see all the created teams with their availability and their team manager. \n
     2. Students can edit their profiles and search for available teams with easy UI design.
 Bug Fixed:
     1. Bug fixed in where professors were not able to see the availability of the teams on their dashboard (FIXED).
