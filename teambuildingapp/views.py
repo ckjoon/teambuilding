@@ -39,19 +39,19 @@ def prof_home():
     username = session['username']
     #profile, classes = db_util.get_user_info()
     # return render_template('prof_home.html', classes)
-    if 'last_class' not in session:
-        classes = get_professor_classes(username)
-        if len(classes) > 0:
-            session['last_class'] = (classes[0][0], '{0} ({1})'.format(classes[0][1], classes[0][2]))
-            session['max_team_size'] = classes[0][3]
-            session['class_names'] = ['{0} ({1})'.format(x[1], x[2]) for x in classes]
-            session['teams'] = get_all_teams_in_class(session['last_class'][0])
+    #if 'last_class' not in session:
+    classes = get_professor_classes(username)
+    if len(classes) > 0:
+        session['last_class'] = (classes[0][0], '{0} ({1})'.format(classes[0][1], classes[0][2]))
+        session['max_team_size'] = classes[0][3]
+        session['class_names'] = ['{0} ({1})'.format(x[1], x[2]) for x in classes]
+        session['teams'] = get_all_teams_in_class(session['last_class'][0])
             
-        else:
-            session['last_class'] = None
-            session['max_team_size'] = None
-            session['class_names'] = []
-            session['teams'] = []
+    else:
+        session['last_class'] = None
+        session['max_team_size'] = None
+        session['class_names'] = []
+        session['teams'] = []
     return make_response(render_template('prof_home.html', last_class=session['last_class'], max_team_size=session['max_team_size'], classes=session['class_names'], teams=session['teams']))
 
 @app.route("/student_home")
