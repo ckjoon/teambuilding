@@ -18,19 +18,17 @@ def logout():
 # Route that will process the file upload
 @app.route('/upload', methods=['POST'])
 def upload():
-    file = request.files['file']
-    class_name = request.form.get('coursename')
-    semester = request.form.get('semester')
-    teamsize = request.form.get('teamsize')
-    if file and allowed_file(file.filename):
-
-        filename = file.filename
-
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    if request.method == 'POST':
+        class_name = request.form.get('coursename')
+        semester = request.form.get('semester')
+        teamsize = request.form.get('teamsize')
+        
+        print(class_name)
+        print(semester)
+        print(teamsize)
 
         create_class(class_name, semester, session['username'], teamsize)
-        process_roster(filename)
-        return redirect(url_for('student_home'))
+        return redirect(url_for('/student_home'))
         
 
 @app.route("/prof_home")
