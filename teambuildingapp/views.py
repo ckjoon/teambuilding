@@ -188,7 +188,7 @@ def accept_decline():
         if (request.form['submit']=='Decline'):
             remove_from_requests(session['class_id'], session['team_id'], text)
 
-        remove_from_requests(session['class_id'], session['team_id'], session['username'])
+        remove_from_requests(session['class_id'], session['team_id'], text)
         return redirect(url_for('team_manager_panel'))
 
 def allowed_file(filename):
@@ -203,6 +203,27 @@ def requestTeam():
 
         return redirect(url_for('student_home'))
 
+@app.route("/leaveTeam", methods=['POST'])
+def leaveTeam():
+    if request.method == 'POST':
+        remove_from_team(session['team_id'], session['username'])
+
+        return redirect(url_for('student_home'))
+
+@app.route("/ar", methods=['POST'])
+def ar():
+    if request.method == 'POST':
+        print("here")
+        stu = request.form.get('student')
+        print("here1")
+        if request.form['submit'] == 'Appoint':
+            print("app")
+            assign_team_captain(session['team_id'], stu)
+        elif request.form['submit'] == 'Remove':
+            print("rem")
+            remove_from_team(session['team_id'], stu)
+
+    return redirect(url_for('team_manager_panel'))
 
 @app.route("/chooseClass", methods=['POST'])
 def choose_classs():
