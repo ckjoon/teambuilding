@@ -100,6 +100,8 @@ def add_to_team(class_id, team_id, gt_username):
     data = (team_id, class_id, gt_username, team_name, False)
     print(cur.mogrify(cmd, data))
 
+    remove_from_requests(class_id, team_id, gt_username)
+
     cur.execute(cmd, data)
     conn.commit()
 
