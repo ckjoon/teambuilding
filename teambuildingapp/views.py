@@ -66,7 +66,7 @@ def student_home():
         student_class_ids = get_student_enrolled_class_id(username)
         if len(student_class_ids) > 0:
             session['class_id'] = student_class_ids[0]
-            student_enrolled_classes = get_student_enrolled_classnames(username)
+            #student_enrolled_classes = get_student_enrolled_classnames(username)
             teamsize = get_class_max_team_size(session['class_id'])
             all_teams = get_all_teams_in_class(session['class_id'])
         else:
@@ -77,12 +77,21 @@ def student_home():
     
     student_comment = get_user_comment(username)
     student_enrolled_classes = get_student_enrolled_classes(username)
+    cur_classname = None
+    if student_enrolled_classes is not None:
+        for cla in student_enrolled_classes:
+            if str(cla[1]) == str(session['class_id']):
+                cur_classname = cla[0]
+
+    if cur_classname is None:
+        cur_classname = "No Class Selected!"
     #print(student_comment)
     #print(student_enrolled_classes)
     #print(all_teams)
+
     resp = make_response(render_template('student_home.html',
                         comment = student_comment, max_team_size = teamsize, 
-                        classes = student_enrolled_classes, teams = all_teams))
+                        classes = student_enrolled_classes, teams = all_teams, cur_classname = cur_classname))
     #resp.set_cookie('firsttime', '', expires=0)
     return resp
 
