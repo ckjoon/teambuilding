@@ -13,6 +13,7 @@ def main():
 @app.route("/logout")
 def logout():
     session.clear()
+    return redirect("/")
 
 # Route that will process the file upload
 @app.route('/upload', methods=['POST'])
@@ -97,7 +98,7 @@ def student_home():
 
     resp = make_response(render_template('student_home.html',
                         comment = student_comment, max_team_size = teamsize, 
-                        classes = student_enrolled_classes, teams = all_teams, in_team=in_team))
+                        classes = student_enrolled_classes, teams = all_teams, in_team=in_team, cur_classname = cur_classname))
     #resp.set_cookie('firsttime', '', expires=0)
     return resp
 
