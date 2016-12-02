@@ -75,14 +75,21 @@ def student_home():
         teamsize = get_class_max_team_size(session['class_id'])
         all_teams = get_all_teams_in_class(session['class_id'])
     
+    #print(all_teams)
     student_comment = get_user_comment(username)
     student_enrolled_classes = get_student_enrolled_classes(username)
     #print(student_comment)
     #print(student_enrolled_classes)
     #print(all_teams)
+    in_team = False
+    for team in all_teams:
+        if team[1] == username:
+            in_team = True
+
+
     resp = make_response(render_template('student_home.html',
                         comment = student_comment, max_team_size = teamsize, 
-                        classes = student_enrolled_classes, teams = all_teams))
+                        classes = student_enrolled_classes, teams = all_teams, in_team=in_team))
     #resp.set_cookie('firsttime', '', expires=0)
     return resp
 
