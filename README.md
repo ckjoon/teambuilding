@@ -1,7 +1,19 @@
 # teambuilding
 Team Building Application for Junior Design
 
-## Build and run
+## Release Notes
+New Features:
+    1. Professors can upload the class roster and see all the created teams with their availability and their team manager.
+    2. Students can edit their profiles and search for available teams with easy UI design.
+Bug Fixed:
+    1. Bug fixed in where professors were not able to see the availability of the teams on their dashboard (FIXED).
+    2. Students were not able to see their updated profiles (FIXED).
+    3. "Send Request" button was not responsive with the database (FIXED).
+Known Bugs:
+    1. Signout feature does not actually log out the user. It goes back to the signin html directly.
+    2. Leaving team as the team manager deletes the team entirely. 
+    
+## Install Guide
 Ensure that you are using python 3 as well as pip3 and have virtualenv configured
 to work with these versions.
 
