@@ -41,7 +41,9 @@
                         {% endfor %}
                         </ul>
                     </li>
-                    <li><a href="/team_manager_panel">My team</a></li>
+                    {% if in_team  %}
+                        <li><a href="/team_manager_panel">My team</a></li>
+                    {% endif %}
                     <li><a href="#profile" data-toggle="modal">Profile</a></li>
                     <li><a href="/">Sign out</a></li>
                 </ul>
