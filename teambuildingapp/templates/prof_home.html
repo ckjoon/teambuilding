@@ -34,7 +34,12 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Choose course section<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                         {% for class in classes %}
-                            <li><a href="#">{{class}}</a></li>
+                            <li>
+                                <form action="/chooseClassProf" method="post">
+                                    <input type="hidden" value="{{class[0]}}" name = "class" />
+                                    <input type = "submit" class="btn btn-success btn-xs" value="{{class[1]}}" name="submit" />
+                                </form>
+                            </li>
                         {% endfor %}
                         </ul>
                     </li>
@@ -59,11 +64,11 @@
                 <div class="panel-content">
 
                     <div class="btn-group btn-group-justified">
-
                         <a href="#editRosterModal" class="btn btn-primary col-sm-3" data-toggle="modal">
                             <i class="glyphicon glyphicon-pencil"></i>
                             <p>Upload Roster</p>
                         </a>
+
                         <a href="#" class="btn btn-primary col-sm-3">
                             <i class="glyphicon glyphicon-asterisk"></i>
                             <p>Match remaining students</p>

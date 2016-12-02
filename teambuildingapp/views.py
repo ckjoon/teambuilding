@@ -1,6 +1,7 @@
 from teambuildingapp import app
 from flask import render_template, request, url_for, redirect, session, make_response
 from flask_cas import login_required
+import os
 #from roster_processor import process_roster
 
 from teambuildingapp.db_util import *
@@ -21,15 +22,12 @@ def upload():
     if request.method == 'POST':
         class_name = request.form.get('coursename')
         semester = request.form.get('semester')
-        teamsize = request.form.get('teamsize')
-        
+        teamsize = request.form.get('teamsize')        
         print(class_name)
         print(semester)
         print(teamsize)
-
         create_class(class_name, semester, session['username'], teamsize)
         return redirect(url_for('prof_home'))
-        
 
 @app.route("/prof_home")
 # Uncomment this to require CAS to access this page
@@ -45,13 +43,12 @@ def prof_home():
         session['max_team_size'] = classes[0][3]
         session['class_names'] = ['{0} ({1})'.format(x[1], x[2]) for x in classes]
         session['teams'] = get_all_teams_in_class(session['last_class'][0])
-            
     else:
         session['last_class'] = None
         session['max_team_size'] = None
         session['class_names'] = []
         session['teams'] = []
-    return make_response(render_template('prof_home.html', last_class=session['last_class'], max_team_size=session['max_team_size'], classes=session['class_names'], teams=session['teams']))
+    return make_response(render_template('prof_home.html', last_class=session['last_class'], max_team_size=session['max_team_size'], classes=classes, teams=session['teams']))
 
 @app.route("/student_home")
 # Uncomment this to require CAS to access this page
@@ -103,6 +100,15 @@ def student_home():
 @app.route("/signin_error")
 def signin_error():
     return render_template('signin_error.html')
+
+@app.route("/uploadFile")
+def uploadFile():
+    if request.method == 'POST':
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            process_roster(filename)
+        return redirect(url_for('prof_home'))
 
 @app.route("/team_manager_panel")
 def team_manager_panel():
@@ -239,3 +245,11 @@ def choose_classs():
         print(class_id)
         session['class_id'] = class_id
         return redirect(url_for('student_home'))
+
+@app.route("/chooseClassProf", methods=['POST'])
+def choose_prof_class():
+    if request.method == 'POST':
+        class_id = request.form.get('class')
+        print(class_id)
+        session['last_class'] = class_id
+        return redirect(url_for('prof_home'))
