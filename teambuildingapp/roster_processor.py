@@ -21,7 +21,11 @@ class RosterProcessor:
     def export_to_db(self):
         db_util.enroll_from_roster(self.students, self.class_id)
 
-# uncomment below for testing
+f = open('./../rosters/csxxxx_roster.xls', 'rb+') 
+instance = RosterProcessor(f.read(), 1) #replace 1 with class ID used in the DB
+instance.process()
+instance.export_to_db()
+
 def process_roster(fname):
     with open(fname, 'rb+'):
         instance = RosterProcessor(f.read())
